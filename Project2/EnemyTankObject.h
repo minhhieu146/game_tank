@@ -12,14 +12,6 @@ public:
 	EnemyTankObject();
 	~EnemyTankObject();
 
-	enum DIRECTION_ENEMY
-	{
-		TURN_LEFT = 1,
-		TURN_RIGHT = 2,
-		TURN_UP = 3,
-		TURN_DOWN = 4,
-	};
-
 	void set_x_val_(const float& xVal) { x_val_ = xVal; }
 	void set_y_val(const float& yVal) { y_val_ = yVal; }
 	

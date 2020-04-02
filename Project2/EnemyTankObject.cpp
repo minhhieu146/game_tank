@@ -28,6 +28,22 @@ bool EnemyTankObject::LoadImage(std::string path, SDL_Renderer* screen)
 
 void EnemyTankObject::Show(SDL_Renderer* des)
 {
+	if (direction == 1)
+	{
+		LoadImage("tankleft.png", des);
+	}
+	else if (direction == 2)
+	{
+		LoadImage("tankright.png", des);
+	}
+	else if (direction == 3)
+	{
+		LoadImage("tankup.png", des);
+	}
+	else if (direction == 4)
+	{
+		LoadImage("tankdown.png", des);
+	}
 		frame_clip[0].x = 0;
 		frame_clip[0].y = 0;
 		frame_clip[0].w = width_frame_;
@@ -42,10 +58,32 @@ void EnemyTankObject::Show(SDL_Renderer* des)
 
 void EnemyTankObject::MoveTank(Map& map_data)
 {
-		srand((int)time(0));
-		x_val_ = 0;
-		y_val_ -= rand() %300+1;
-		direction = TURN_UP;
+		srand((int)time(0));		
+		direction = rand() % 4 + 1;
+		if (direction == 1)
+		{
+			srand((int)time(0));
+			x_val_ -= rand() % 5;
+			y_val_ = 0;
+		}
+		else if (direction == 2)
+		{
+			srand((int)time(0));
+			x_val_ += rand() % 5;
+			y_val_ = 0;
+		}
+		else if (direction == 3)
+		{
+			srand((int)time(0));
+			x_val_ = 0;
+			y_val_ -= rand() % 5;
+		}
+		else if (direction == 4)
+		{
+			srand((int)time(0));
+			x_val_ = 0;
+			y_val_ += rand() % 5;
+		}
 
 		CheckMap(map_data);
 

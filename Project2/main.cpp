@@ -79,7 +79,7 @@ int main(int agrc, char* agrv[])
 	game_map.LoadTiles(gScreen);
 	
 	MainObject tank;
-	tank.LoadImage("tankright.png", gScreen);
+	tank.LoadImage("tankrdown.png", gScreen);
 
 	EnemyTankObject enemy_tank;
 	enemy_tank.LoadImage("tankup.png", gScreen);
@@ -108,8 +108,8 @@ int main(int agrc, char* agrv[])
 		tank.Show(gScreen);
 		tank.HandleBullet(gScreen);
 
-		enemy_tank.Show(gScreen);
 		enemy_tank.MoveTank(map_data);
+		enemy_tank.Show(gScreen);
 
 		SDL_RenderPresent(gScreen);
 
