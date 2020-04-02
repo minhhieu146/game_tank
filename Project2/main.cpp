@@ -3,6 +3,7 @@
 #include"Game_map.h"
 #include"TankObject.h"
 #include"ImpTimer.h"
+#include"EnemyTankObject.h"
 
 BaseObject gBackground;
 bool InitData()
@@ -58,6 +59,7 @@ void close()
 	IMG_Quit();
 	SDL_Quit(); 
 }
+  
 
 int main(int agrc, char* agrv[])
 {
@@ -78,7 +80,9 @@ int main(int agrc, char* agrv[])
 	
 	MainObject tank;
 	tank.LoadImage("tankright.png", gScreen);
-	tank.Set_clipsLR();
+
+	EnemyTankObject enemy_tank;
+	enemy_tank.LoadImage("tankup.png", gScreen);
 
 	bool is_quit = false;
 	while(!is_quit)
@@ -99,8 +103,13 @@ int main(int agrc, char* agrv[])
 		game_map.DrawMap(gScreen); 
 		Map map_data = game_map.getMap();
 
+		
 		tank.DoTank(map_data);
 		tank.Show(gScreen);
+		tank.HandleBullet(gScreen);
+
+		enemy_tank.Show(gScreen);
+		enemy_tank.MoveTank(map_data);
 
 		SDL_RenderPresent(gScreen);
 

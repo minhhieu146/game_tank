@@ -3,6 +3,9 @@
 
 #include"CommonFuntion.h";
 #include"BaseObject.h";
+#include<vector>
+#include"BulletObject.h"
+
 #define TANK_SPEED 5
 
 class MainObject : public BaseObject
@@ -22,12 +25,21 @@ public:
 	bool LoadImage(std::string path, SDL_Renderer* screen);
 	void HandelInput(SDL_Event events, SDL_Renderer* screen);
 	void Show(SDL_Renderer* des);
-	void Set_clipsLR();
-	void Set_clipsDU();
 
 	void DoTank(Map& map_data);
-	void CheckToMap(Map& map_dada);
+	void CheckMap(Map& map_dada);
+
+
+	void set_bullet_list_(std::vector<BulletObject*> bullet_list)
+	{
+		p_bullet_list_ = bullet_list;
+	}
+	std::vector<BulletObject*> get_bullet_list_() const { return p_bullet_list_; }
+	void HandleBullet(SDL_Renderer* des);
+
 private:
+
+	std::vector<BulletObject*> p_bullet_list_;
 	float x_val_;
 	float y_val_;
 
@@ -41,7 +53,6 @@ private:
 	Input input_type_;
 	int frame_;
 	int status_;
-	bool on_ground_;
 };
 
 #endif 

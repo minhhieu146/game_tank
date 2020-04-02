@@ -5,10 +5,13 @@
 #include<string>
 #include<SDL.h>
 #include<SDL_image.h>
+#include<vector>
+#include<time.h>
 
 static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gScreen = NULL;
 static SDL_Event gEvent;
+
 
 //SCREEN
 const int FRAME_PER_SECOND = 25; //fps
@@ -24,6 +27,10 @@ const int COLOR_KEY_B = 180;
 #define TILE_SIZE 64
 #define MAX_MAP_X 20
 #define MAX_MAP_Y 10
+#define LEFT 0
+#define RIGHT 1
+#define DOWN 2 
+#define UP 3
 
 typedef struct Input
 {
