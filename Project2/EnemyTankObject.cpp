@@ -63,26 +63,26 @@ void EnemyTankObject::MoveTank(Map& map_data)
 		if (direction == 1)
 		{
 			srand((int)time(0));
-			x_val_ -= rand() % 5;
+			x_val_ -= rand() % (3);
 			y_val_ = 0;
 		}
 		else if (direction == 2)
 		{
 			srand((int)time(0));
-			x_val_ += rand() % 5;
+			x_val_ += rand() % (3);
 			y_val_ = 0;
 		}
 		else if (direction == 3)
 		{
 			srand((int)time(0));
 			x_val_ = 0;
-			y_val_ -= rand() % 5;
+			y_val_ -= rand() % (3);
 		}
 		else if (direction == 4)
 		{
 			srand((int)time(0));
 			x_val_ = 0;
-			y_val_ += rand() % 5;
+			y_val_ += rand() % (3);
 		}
 
 		CheckMap(map_data);
