@@ -30,23 +30,23 @@ public:
 	int get_height_frame() const { return height_frame_; }
 	void MoveTank(Map& map_data);
 	void CheckMap(Map& map_data);
-	void SetMapXY(const int& mp_x, const int& mp_y) { map_x_ = mp_x; map_y_ = mp_y; }
+	void SetMapXY(const int& mp_x, const int& mp_y) { map_x_ = mp_x; map_y_ = mp_y; };
 
 private:
 	
 	int map_x_;
 	int map_y_;
-	float x_pos_;
-	float y_pos_;
+	float x_pos_, previous_x_pos_;
+	float y_pos_, previous_y_pos_;
 	SDL_Rect frame_clip[8];
 	float x_val_;
 	float y_val_;
 	int width_frame_;
 	int height_frame_;
-	int frame_;
+	int frame_, frame_stay_still =0;
 	int direction;
+	int turningLimit;
 	
-
 };
 
 #endif // 

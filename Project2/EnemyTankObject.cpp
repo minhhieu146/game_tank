@@ -12,6 +12,9 @@ EnemyTankObject::EnemyTankObject()
 	y_val_ = 0.0;
 	frame_ = 0;
 	direction = 0;
+	previous_x_pos_ = 0;
+	previous_y_pos_ = 0;
+	turningLimit = 0;
 }
 
 EnemyTankObject::~EnemyTankObject()
@@ -58,36 +61,83 @@ void EnemyTankObject::Show(SDL_Renderer* des)
 
 void EnemyTankObject::MoveTank(Map& map_data)
 {
-		srand((int)time(0));		
+	srand((int)time(0));
+
+	if (turningLimit <= 0)
+	{
 		direction = rand() % 4 + 1;
+		turningLimit = 50;
+	}
+
+	bool okay = false;
+
+	turningLimit--;
+
+	srand((int)time(0) + rand());
+	while (!okay)
+	{
 		if (direction == 1)
 		{
-			srand((int)time(0));
-			x_val_ -= rand() % (3);
+			x_val_ = -(rand() % (7)+1);
 			y_val_ = 0;
 		}
 		else if (direction == 2)
 		{
-			srand((int)time(0));
-			x_val_ += rand() % (3);
+			x_val_ = rand() % (7)+1;
 			y_val_ = 0;
 		}
-		else if (direction == 3)
-		{
-			srand((int)time(0));
-			x_val_ = 0;
-			y_val_ -= rand() % (3);
-		}
-		else if (direction == 4)
-		{
-			srand((int)time(0));
-			x_val_ = 0;
-			y_val_ += rand() % (3);
-		}
+		else
+			if (direction == 3)
+			{
+				x_val_ = 0;
+				y_val_  = -(rand() % (7)+1);
+			}
+			else
+				if (direction == 4)
+				{
+					x_val_ = 0;
+					y_val_ = rand() % (7)+1;
+				}
 
 		CheckMap(map_data);
 
+
+		if (previous_x_pos_ == x_pos_ && previous_y_pos_ == y_pos_)
+		{
+			frame_stay_still++;
+			CheckMap(map_data);
+
+		}
+
+
+
+		if (frame_stay_still >= 3 && turningLimit <=0)
+		{
+
+			int tempDir = direction + 1;
+			if (tempDir > 4)
+				tempDir = 0;
+			direction = tempDir;
+			/*
+			int tempDir = rand() % 4 + 1;
+			while (tempDir==direction)
+			{
+				tempDir = rand() % 4 + 1;
+			}
+			direction = tempDir;*/
+			frame_stay_still = 0;
+			turningLimit = 50;
+
+		}
+		else
+		{
+			okay = true;
+		}
+	}
+	previous_x_pos_ = x_pos_;
+	previous_y_pos_ = y_pos_;
 }
+
 
 
 void EnemyTankObject::CheckMap(Map& map_data)
