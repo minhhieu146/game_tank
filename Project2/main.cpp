@@ -4,6 +4,7 @@
 #include"TankObject.h"
 #include"ImpTimer.h"
 #include"EnemyTankObject.h"
+#include"BulletObject.h"
 
 BaseObject gBackground;
 bool InitData()
@@ -60,6 +61,27 @@ void close()
 	SDL_Quit(); 
 }
   
+std::vector<EnemyTankObject*> MakeEnemyList()
+{
+	std::vector<EnemyTankObject*> list_enemy;
+	EnemyTankObject* enemy_obj = new EnemyTankObject[3];
+	for (int i = 0; i < 1; i++)
+	{
+		EnemyTankObject* pEnemy = (enemy_obj + i);
+		if (pEnemy != NULL)
+		{
+			pEnemy->LoadImage("tankup.png", gScreen);
+			pEnemy->set_x_pos_(1100.0);
+			pEnemy->set_y_pos_(100.0 + 200.0 * i);
+
+			BulletObject* pBullet = new BulletObject();
+			pEnemy->InitBullet(pBullet, gScreen);
+
+			list_enemy.push_back(pEnemy);
+		}
+	}
+	return list_enemy;
+}
 
 int main(int agrc, char* agrv[])
 {
@@ -81,8 +103,8 @@ int main(int agrc, char* agrv[])
 	MainObject tank;
 	tank.LoadImage("tankrdown.png", gScreen);
 
-	EnemyTankObject enemy_tank;
-	enemy_tank.LoadImage("tankup.png", gScreen);
+	std::vector<EnemyTankObject*> list_enemy = MakeEnemyList();
+	
 
 	bool is_quit = false;
 	while(!is_quit)
@@ -108,8 +130,17 @@ int main(int agrc, char* agrv[])
 		tank.Show(gScreen);
 		tank.HandleBullet(gScreen);
 
-		enemy_tank.MoveTank(map_data);
-		enemy_tank.Show(gScreen);
+		for (int i = 0; i < 1; i++)
+		{
+			EnemyTankObject* pEnemy = list_enemy.at(i);
+			if (pEnemy != NULL)
+			{
+				pEnemy->SetMapXY(map_data.start_x_, map_data.start_y_);
+				pEnemy->MoveTank(map_data);
+				pEnemy->MakeBullet(gScreen, SCREEN_WIDTH, SCREEN_HEIGHT);
+				pEnemy->Show(gScreen);
+			}
+		}
 
 		SDL_RenderPresent(gScreen);
 

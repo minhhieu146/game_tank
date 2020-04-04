@@ -4,8 +4,8 @@
 
 EnemyTankObject::EnemyTankObject()
 {
-	x_pos_ = 1100.0;
-	y_pos_ = 300.0;
+	x_pos_ = 00.0;
+	y_pos_ = 00.0;
 	width_frame_ = 60;
 	height_frame_ = 60;
 	x_val_ = 0.0;
@@ -15,6 +15,7 @@ EnemyTankObject::EnemyTankObject()
 	previous_x_pos_ = 0;
 	previous_y_pos_ = 0;
 	turningLimit = 0;
+	check_dir = -1;
 }
 
 EnemyTankObject::~EnemyTankObject()
@@ -34,18 +35,22 @@ void EnemyTankObject::Show(SDL_Renderer* des)
 	if (direction == 1)
 	{
 		LoadImage("tankleft.png", des);
+		check_dir = 1;
 	}
 	else if (direction == 2)
 	{
 		LoadImage("tankright.png", des);
+		check_dir = 2;
 	}
 	else if (direction == 3)
 	{
 		LoadImage("tankup.png", des);
+		check_dir = 3;
 	}
 	else if (direction == 4)
 	{
 		LoadImage("tankdown.png", des);
+		check_dir = 4;
 	}
 		frame_clip[0].x = 0;
 		frame_clip[0].y = 0;
@@ -80,24 +85,26 @@ void EnemyTankObject::MoveTank(Map& map_data)
 		{
 			x_val_ = -(rand() % (7)+1);
 			y_val_ = 0;
+			check_dir = 1;
 		}
 		else if (direction == 2)
 		{
 			x_val_ = rand() % (7)+1;
 			y_val_ = 0;
+			check_dir = 2;
 		}
-		else
-			if (direction == 3)
-			{
-				x_val_ = 0;
-				y_val_  = -(rand() % (7)+1);
-			}
-			else
-				if (direction == 4)
-				{
-					x_val_ = 0;
-					y_val_ = rand() % (7)+1;
-				}
+		else if (direction == 3)
+		{
+			x_val_ = 0;
+			y_val_  = -(rand() % (7)+1);
+			check_dir = 3;
+		}
+		else if (direction == 4)
+		{
+			x_val_ = 0;
+			y_val_ = rand() % (7)+1;
+			check_dir = 4;
+		}
 
 		CheckMap(map_data);
 
@@ -219,4 +226,58 @@ void EnemyTankObject::CheckMap(Map& map_data)
 		y_pos_ -= y_val_;
 	}
 	
+}
+
+void EnemyTankObject::InitBullet(BulletObject* pBullet, SDL_Renderer* screen)
+{
+	if (pBullet != NULL)
+	{
+		if (check_dir == 1)
+		{
+			pBullet->LoadImage("BulletLeft.png", screen);
+			pBullet->set_x_val_(20);
+		}
+		else if (check_dir == 2)
+		{
+			pBullet->LoadImage("BulletRight.png", screen);
+			pBullet->set_x_val_(20);
+
+		}
+		else if (check_dir == 3)
+		{
+			pBullet->LoadImage("BulletUp.png", screen);
+			pBullet->set_y_val_(20);
+
+		}
+		else if (check_dir == 4)
+		{
+			pBullet->LoadImage("BulletDown.png", screen);
+			pBullet->set_y_val_(20);
+
+		}
+		pBullet->set_is_move(true);
+		pBullet->SetRect(x_pos_ + 5, y_pos_ + 10);
+		bullet_list_.push_back(pBullet);
+	}
+}
+
+void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& y_limit)
+{
+	for (int i = 0; i < bullet_list_.size(); i++)
+	{
+		BulletObject* pBullet = bullet_list_.at(i);
+		if (pBullet != NULL)
+		{
+			if (pBullet->get_is_move())
+			{
+				pBullet->HandleMove(x_limit, y_limit);
+				pBullet->Render(screen);
+			}
+			else
+			{
+				pBullet->set_is_move(true);
+				pBullet->SetRect(x_pos_ + 10, y_pos_ + 10);
+			}
+		}
+	}
 }

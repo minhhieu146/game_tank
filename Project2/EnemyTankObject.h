@@ -4,6 +4,7 @@
 
 #include"CommonFuntion.h"
 #include"BaseObject.h"
+#include"BulletObject.h"
 
 
 class EnemyTankObject : public BaseObject
@@ -11,6 +12,7 @@ class EnemyTankObject : public BaseObject
 public:
 	EnemyTankObject();
 	~EnemyTankObject();
+
 
 	void set_x_val_(const float& xVal) { x_val_ = xVal; }
 	void set_y_val(const float& yVal) { y_val_ = yVal; }
@@ -32,6 +34,13 @@ public:
 	void CheckMap(Map& map_data);
 	void SetMapXY(const int& mp_x, const int& mp_y) { map_x_ = mp_x; map_y_ = mp_y; };
 
+
+	std::vector<BulletObject*> get_bullet_list() const { return bullet_list_; };
+	void set_bullet_list(const std::vector<BulletObject*> &bl_list) { bullet_list_ = bl_list; };
+
+	void InitBullet(BulletObject* pBullet, SDL_Renderer* screen);
+	void MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& y_limit);
+
 private:
 	
 	int map_x_;
@@ -46,7 +55,8 @@ private:
 	int frame_, frame_stay_still =0;
 	int direction;
 	int turningLimit;
-	
+	std::vector<BulletObject*> bullet_list_;
+	int check_dir;
 };
 
 #endif // 
