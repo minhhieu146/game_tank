@@ -25,6 +25,9 @@ public:
 
 	float get_x_pos_() const { return x_pos_; }
 	float get_y_pos_() const { return y_pos_; }
+
+	void set_check_dir( int& checkDir) { check_dir = checkDir; }
+	int get_check_dir()  { return check_dir; }
 	
 	bool LoadImage(std::string path, SDL_Renderer* screen);
 	void Show(SDL_Renderer* des);
@@ -40,6 +43,7 @@ public:
 
 	void InitBullet(BulletObject* pBullet, SDL_Renderer* screen);
 	void MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& y_limit);
+	
 
 private:
 	

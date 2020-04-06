@@ -72,6 +72,22 @@ void EnemyTankObject::MoveTank(Map& map_data)
 	{
 		direction = rand() % 4 + 1;
 		turningLimit = 50;
+		if (direction == 1)
+		{
+			check_dir = 1;
+		}
+		else if (direction == 2)
+		{
+			check_dir = 2;
+		}
+		else if (direction == 3)
+		{
+			check_dir = 3;
+		}
+		else if (direction == 4)
+		{
+			check_dir = 4;
+		}
 	}
 
 	bool okay = false;
@@ -228,33 +244,13 @@ void EnemyTankObject::CheckMap(Map& map_data)
 	
 }
 
+
+
 void EnemyTankObject::InitBullet(BulletObject* pBullet, SDL_Renderer* screen)
 {
 	if (pBullet != NULL)
 	{
-		if (check_dir == 1)
-		{
-			pBullet->LoadImage("BulletLeft.png", screen);
-			pBullet->set_x_val_(20);
-		}
-		else if (check_dir == 2)
-		{
-			pBullet->LoadImage("BulletRight.png", screen);
-			pBullet->set_x_val_(20);
-
-		}
-		else if (check_dir == 3)
-		{
-			pBullet->LoadImage("BulletUp.png", screen);
-			pBullet->set_y_val_(20);
-
-		}
-		else if (check_dir == 4)
-		{
-			pBullet->LoadImage("BulletDown.png", screen);
-			pBullet->set_y_val_(20);
-
-		}
+		
 		pBullet->set_is_move(true);
 		pBullet->SetRect(x_pos_ + 5, y_pos_ + 10);
 		bullet_list_.push_back(pBullet);
@@ -268,10 +264,49 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 		BulletObject* pBullet = bullet_list_.at(i);
 		if (pBullet != NULL)
 		{
+			int bullet_distance = 0;
+			if (check_dir == 1)
+			{
+				pBullet->LoadImage("BulletLeft.png", screen);
+				pBullet->set_bullet_direction(BulletObject::DIR_LEFT);
+				pBullet->set_x_val_(20);
+				bullet_distance = rect_.x - pBullet->GetRect().x;
+				
+			}
+			else if (check_dir == 2)
+			{
+				pBullet->LoadImage("BulletRight.png", screen);
+				pBullet->set_bullet_direction(BulletObject::DIR_RIGHT);
+				pBullet->set_x_val_(20);
+				bullet_distance = -(rect_.x, pBullet->GetRect().x);
+
+			}
+			else if (check_dir == 3)
+			{
+				pBullet->LoadImage("BulletUp.png", screen);
+				pBullet->set_bullet_direction(BulletObject::DIR_UP);
+				pBullet->set_y_val_(20);
+				bullet_distance = rect_.y - pBullet->GetRect().y;
+			}
+			else if (check_dir == 4)
+			{
+				pBullet->LoadImage("BulletDown.png", screen);
+				pBullet->set_bullet_direction(BulletObject::DIR_DOWN);
+				pBullet->set_y_val_(20);
+				bullet_distance = -(rect_.y - pBullet->GetRect().y);
+
+			}
 			if (pBullet->get_is_move())
 			{
-				pBullet->HandleMove(x_limit, y_limit);
-				pBullet->Render(screen);
+				if (bullet_distance <= 300)
+				{
+					pBullet->HandleMove(x_limit, y_limit);
+					pBullet->Render(screen);
+				}
+				else
+				{
+					pBullet->set_is_move(false);
+				}
 			}
 			else
 			{

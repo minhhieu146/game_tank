@@ -23,7 +23,7 @@
     <ProjectGuid>{5ABA9C7C-EC3D-4B76-8A88-2400D1BEF339}</ProjectGuid>
     <RootNamespace>Project2</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>BachcaiSDL</ProjectName>
+    <ProjectName>Game Tank</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

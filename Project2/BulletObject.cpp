@@ -1,5 +1,6 @@
 #include"BaseObject.h"
 #include"BulletObject.h"
+#include"EnemyTankObject.h"
 
 BulletObject::BulletObject()
 {

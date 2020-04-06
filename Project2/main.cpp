@@ -136,8 +136,8 @@ int main(int agrc, char* agrv[])
 			if (pEnemy != NULL)
 			{
 				pEnemy->SetMapXY(map_data.start_x_, map_data.start_y_);
-				pEnemy->MoveTank(map_data);
 				pEnemy->MakeBullet(gScreen, SCREEN_WIDTH, SCREEN_HEIGHT);
+				pEnemy->MoveTank(map_data);
 				pEnemy->Show(gScreen);
 			}
 		}
@@ -153,6 +153,19 @@ int main(int agrc, char* agrv[])
 			SDL_Delay(delay_time);
 		}
 	}
+
+	for (int i = 0; i < 1; i++)
+	{
+		EnemyTankObject* pEnemy = list_enemy.at(i);
+		if (pEnemy != NULL)
+		{
+			pEnemy->Free();
+			pEnemy = NULL;
+		}
+	}
+
+	list_enemy.clear();
+
 	close();
 	return 0;
 } 

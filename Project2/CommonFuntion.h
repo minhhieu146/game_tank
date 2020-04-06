@@ -52,4 +52,10 @@ typedef struct Map
     const char* file_name;
 
 };
+
+namespace SDL_CommonFunc
+{
+	bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2)
+}
+
 #endif
