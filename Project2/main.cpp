@@ -142,6 +142,19 @@ int main(int agrc, char* agrv[])
 			}
 		}
 
+		std::vector<BulletObject*> bullet_arr = tank.get_bullet_list_();
+		for (int i = 0; i < bullet_arr.size(); i++)
+		{
+			BulletObject* p_bullet = bullet_arr.at(i);
+			if (p_bullet != NULL)
+			{
+				for (int j = 0; j < 1; j++)
+				{
+
+				}
+			}
+		}
+
 		SDL_RenderPresent(gScreen);
 
 		int real_imp_time = fps_timer.get_ticks();
