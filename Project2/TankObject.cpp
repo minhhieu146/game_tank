@@ -237,6 +237,20 @@ void MainObject::HandleBullet(SDL_Renderer* des)
 	}
 }
 
+void MainObject::RemoveBullet(const int& idx)
+{
+	int size = p_bullet_list_.size();
+	if (size > 0 && idx < size)
+	{
+		BulletObject* pBullet = p_bullet_list_.at(idx);
+		p_bullet_list_.erase(p_bullet_list_.begin() + idx);
+		if (pBullet != NULL)
+		{
+			delete pBullet;
+			pBullet = NULL;
+		}
+	}
+}
 
 
 void MainObject::DoTank(Map& map_data)

@@ -65,7 +65,7 @@ std::vector<EnemyTankObject*> MakeEnemyList()
 {
 	std::vector<EnemyTankObject*> list_enemy;
 	EnemyTankObject* enemy_obj = new EnemyTankObject[3];
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		EnemyTankObject* pEnemy = (enemy_obj + i);
 		if (pEnemy != NULL)
@@ -130,7 +130,7 @@ int main(int agrc, char* agrv[])
 		tank.Show(gScreen);
 		tank.HandleBullet(gScreen);
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < list_enemy.size(); i++)
 		{
 			EnemyTankObject* pEnemy = list_enemy.at(i);
 			if (pEnemy != NULL)
@@ -148,9 +148,30 @@ int main(int agrc, char* agrv[])
 			BulletObject* p_bullet = bullet_arr.at(i);
 			if (p_bullet != NULL)
 			{
-				for (int j = 0; j < 1; j++)
+				for (int j = 0; j < list_enemy.size(); j++)
 				{
+					EnemyTankObject* EnemyTank = list_enemy.at(j);
+					if (EnemyTank != NULL)
+					{
+						SDL_Rect eRect;
+						eRect.x = EnemyTank->GetRect().x;
+						eRect.y = EnemyTank->GetRect().y;
+						eRect.w = EnemyTank->get_width_frame();
+						eRect.h = EnemyTank->get_height_frame();
 
+						SDL_Rect bRect;
+						bRect.x = p_bullet->GetRect().x;
+						bRect.y = p_bullet->GetRect().y;
+
+						bool coll = SDL_CommonFunc::CheckCollision(bRect, eRect);
+
+						if (coll == true)
+						{
+							tank.RemoveBullet(i); 
+							EnemyTank->Free();
+							list_enemy.erase(list_enemy.begin() + j);
+						}
+					}
 				}
 			}
 		}
@@ -167,7 +188,7 @@ int main(int agrc, char* agrv[])
 		}
 	}
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		EnemyTankObject* pEnemy = list_enemy.at(i);
 		if (pEnemy != NULL)

@@ -36,6 +36,7 @@ public:
 	}
 	std::vector<BulletObject*> get_bullet_list_() const { return p_bullet_list_; }
 	void HandleBullet(SDL_Renderer* des);
+	void RemoveBullet(const int& idx);
 
 private:
 
