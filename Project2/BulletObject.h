@@ -30,7 +30,7 @@ public:
 	void set_is_move(const bool& isMove) { is_move_ = isMove; }
 	bool get_is_move() const { return is_move_; }
 	void HandleMove(const int& x_boder_, const int& y_boder_);
-
+	void CheckMapForBullet(Map& map_data);
 private:
 	int x_val_;
 	int y_val_;

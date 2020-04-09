@@ -43,6 +43,9 @@ public:
 
 	void InitBullet(BulletObject* pBullet, SDL_Renderer* screen);
 	void MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& y_limit);
+	void RemoveBullet(const int& idx);
+
+	SDL_Rect GetRectTank();
 	
 
 private:

@@ -139,6 +139,35 @@ int main(int agrc, char* agrv[])
 				pEnemy->MakeBullet(gScreen, SCREEN_WIDTH, SCREEN_HEIGHT);
 				pEnemy->MoveTank(map_data);
 				pEnemy->Show(gScreen);
+
+				SDL_Rect rect_main_tank = tank.GetRectTank();
+				bool colli = false;
+				std::vector<BulletObject*> eBullet_list = pEnemy->get_bullet_list();
+				for (int j = 0; j < eBullet_list.size(); j++)
+				{
+					BulletObject* eBullet = eBullet_list.at(j);
+					if (eBullet != NULL)
+					{
+						colli = SDL_CommonFunc::CheckCollision(eBullet->GetRect(), rect_main_tank);
+						if (colli == true)
+						{
+							pEnemy->RemoveBullet(j);
+							break;
+						}
+					}
+				}
+
+				SDL_Rect rect_enemy = pEnemy->GetRectTank();
+				bool COLL = false;
+				COLL = SDL_CommonFunc::CheckCollision(rect_main_tank, rect_enemy);
+				if ( COLL == true ||colli == true)
+				{
+						pEnemy->Free();
+						close();
+						SDL_Quit();
+						return 0;
+				}
+
 			}
 		}
 

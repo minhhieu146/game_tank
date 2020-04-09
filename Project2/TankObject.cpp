@@ -1,5 +1,6 @@
-#include"TankObject.h";
+#include"TankObject.h"
 #include"BulletObject.h"
+#include"Game_map.h"
 MainObject::MainObject()
 {
 	frame_ = 0;
@@ -25,6 +26,18 @@ bool MainObject::LoadImage(std::string path, SDL_Renderer* screen)
 {
 	bool ret = BaseObject::LoadImage(path, screen);
 	return ret;
+}
+
+
+
+SDL_Rect MainObject::GetRectTank()
+{
+	SDL_Rect rect;
+	rect.x = rect_.x;
+	rect.y = rect_.y;
+	rect.w = 64;
+	rect.h = 64;
+	return rect;
 }
 
 
@@ -211,6 +224,8 @@ void MainObject::HandelInput(SDL_Event events, SDL_Renderer* screen)
 		}
 	}
 }
+GameMap game_map;
+Map map_data = game_map.getMap();
 
 void MainObject::HandleBullet(SDL_Renderer* des)
 {

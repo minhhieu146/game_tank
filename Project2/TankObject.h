@@ -38,6 +38,8 @@ public:
 	void HandleBullet(SDL_Renderer* des);
 	void RemoveBullet(const int& idx);
 
+	SDL_Rect GetRectTank();
+
 private:
 
 	std::vector<BulletObject*> p_bullet_list_;

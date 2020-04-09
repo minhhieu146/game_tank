@@ -316,3 +316,28 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 		}
 	}
 }
+
+void EnemyTankObject::RemoveBullet(const int& idx)
+{
+	int size = bullet_list_.size();
+	if (size > 0 && idx < size)
+	{
+		BulletObject* pBullet = bullet_list_.at(idx);
+		bullet_list_.erase(bullet_list_.begin() + idx);
+		if (pBullet != NULL)
+		{
+			delete pBullet;
+			pBullet = NULL;
+		}
+	}
+}
+
+SDL_Rect EnemyTankObject::GetRectTank()
+{
+	SDL_Rect rect;
+	rect.x = rect_.x;
+	rect.y = rect_.y;
+	rect.w = 64;
+	rect.h = 64;
+	return rect;
+}
