@@ -154,6 +154,7 @@ int main(int agrc, char* agrv[])
 							pEnemy->RemoveBullet(j);
 							break;
 						}
+		
 					}
 				}
 
@@ -193,12 +194,18 @@ int main(int agrc, char* agrv[])
 						bRect.y = p_bullet->GetRect().y;
 
 						bool coll = SDL_CommonFunc::CheckCollision(bRect, eRect);
+						bool coll_1 = p_bullet->CheckMapForBullet(map_data, bRect);	
 
 						if (coll == true)
 						{
 							tank.RemoveBullet(i); 
 							EnemyTank->Free();
 							list_enemy.erase(list_enemy.begin() + j);
+						}
+
+						if (coll_1 == true)
+						{
+							tank.RemoveBullet(i);
 						}
 					}
 				}

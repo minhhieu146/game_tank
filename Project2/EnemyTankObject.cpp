@@ -1,6 +1,7 @@
 #include"EnemyTankObject.h"
 #include"BaseObject.h"
 #include"CommonFuntion.h"
+#include"BulletObject.h"
 
 EnemyTankObject::EnemyTankObject()
 {
@@ -296,7 +297,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 				bullet_distance = -(rect_.y - pBullet->GetRect().y);
 
 			}
-			if (pBullet->get_is_move())
+			if (pBullet->get_is_move() == true)
 			{
 				if (bullet_distance <= 300)
 				{
@@ -307,11 +308,12 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 				{
 					pBullet->set_is_move(false);
 				}
+				
 			}
 			else
 			{
 				pBullet->set_is_move(true);
-				pBullet->SetRect(x_pos_ + 10, y_pos_ + 10);
+				pBullet->SetRect(x_pos_ + 10, y_pos_);
 			}
 		}
 	}
