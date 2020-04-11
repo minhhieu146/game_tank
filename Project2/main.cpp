@@ -5,6 +5,7 @@
 #include"ImpTimer.h"
 #include"EnemyTankObject.h"
 #include"BulletObject.h"
+#include"Explosive Effect.h"
 
 BaseObject gBackground;
 bool InitData()
@@ -105,6 +106,13 @@ int main(int agrc, char* agrv[])
 
 	std::vector<EnemyTankObject*> list_enemy = MakeEnemyList();
 	
+	ExplosiveEffectObject ex_enemy;
+	bool rec = ex_enemy.LoadImage("Explosion.png", gScreen);
+	if(rec ==false)
+	{
+		return -1;
+	}
+	ex_enemy.set_clip();
 
 	bool is_quit = false;
 	while(!is_quit)
@@ -198,6 +206,15 @@ int main(int agrc, char* agrv[])
 
 						if (coll == true)
 						{
+							for (int ex = 0; ex < 8; ex++)
+							{
+								int  x_pos = p_bullet->GetRect().x - 50;
+								int y_pos = p_bullet->GetRect().y - 50;
+								ex_enemy.set_frame_number(ex);
+								ex_enemy.SetRect(x_pos, y_pos);
+								ex_enemy.Show(gScreen);
+							}
+
 							tank.RemoveBullet(i); 
 							EnemyTank->Free();
 							list_enemy.erase(list_enemy.begin() + j);
