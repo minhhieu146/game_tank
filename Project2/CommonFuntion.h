@@ -19,11 +19,10 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 32;
 
-const int COLOR_KEY_R = 167;
-const int COLOR_KEY_G = 175;
-const int COLOR_KEY_B = 180;
+const int COLOR_KEY_R = 255;
+const int COLOR_KEY_G = 255;
+const int COLOR_KEY_B = 255;
 
-#define BLANK_TILE 0
 #define TILE_SIZE 64
 #define MAX_MAP_X 20
 #define MAX_MAP_Y 10

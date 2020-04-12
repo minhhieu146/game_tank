@@ -21,6 +21,14 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+/bin
+/obi
+/Debug
+/.vs
+*.dll
+*.o
+*.obi
+*.exe
 
 # Visual Studio 2015 cache/options directory
 .vs/

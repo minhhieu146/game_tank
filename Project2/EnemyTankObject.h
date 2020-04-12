@@ -3,28 +3,28 @@
 
 
 #include"CommonFuntion.h"
-#include"BaseObject.h"
+#include"BasicObject.h"
 #include"BulletObject.h"
 
 
-class EnemyTankObject : public BaseObject
+class EnemyTankObject : public BasicObject
 {
 public:
 	EnemyTankObject();
 	~EnemyTankObject();
 
 
-	void set_x_val_(const float& xVal) { x_val_ = xVal; }
-	void set_y_val(const float& yVal) { y_val_ = yVal; }
+	void set_x_change(const float& xChange) { x_change = xChange; }
+	void set_y_change(const float& yChange) { y_change = yChange; }
 	
-	void set_x_pos_(const float& xPos) { x_pos_ = xPos; }
-	void set_y_pos_(const float& yPos) { y_pos_ = yPos; }
+	void set_x_location(const float& xLocation) { x_location = xLocation; }
+	void set_y_location(const float& yLocation) { y_location = yLocation; }
 
-	int get_x_val_() const { return x_val_; }
-	int get_y_val_() const { return y_val_; }
+	int get_x_change() const { return x_change; }
+	int get_y_change() const { return y_change; }
 
-	float get_x_pos_() const { return x_pos_; }
-	float get_y_pos_() const { return y_pos_; }
+	float get_x_location() const { return x_location; }
+	float get_y_location() const { return y_location; }
 
 	void set_check_dir( int& checkDir) { check_dir = checkDir; }
 	int get_check_dir()  { return check_dir; }
@@ -46,18 +46,18 @@ public:
 
 	void RemoveBullet(const int& idx);
 
-	SDL_Rect GetRectTank();
+	SDL_Rect GetRectEnemyTank();
 	
 
 private:
 	
 	int map_x_;
 	int map_y_;
-	float x_pos_, previous_x_pos_;
-	float y_pos_, previous_y_pos_;
+	float x_location, previous_x_location;
+	float y_location, previous_y_location;
 	SDL_Rect frame_clip[8];
-	float x_val_;
-	float y_val_;
+	float x_change;
+	float y_change;
 	int width_frame_;
 	int height_frame_;
 	int frame_, frame_stay_still =0;

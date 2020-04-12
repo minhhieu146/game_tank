@@ -1,29 +1,29 @@
-#ifndef BASE_OBJECT_H_
-#define BASE_OBJECT_H_
+#ifndef BASIC_OBJECT_H_
+#define BASIC_OBJECT_H_
 
 #include"CommonFuntion.h"
 
-class BaseObject
+class BasicObject
 {
 public:
-	BaseObject();
-	~BaseObject();
+	BasicObject();
+	~BasicObject();
 	void SetRect(const int& x, const int& y) {
 		rect_.x = x;
 		rect_.y = y;
 	}
 	SDL_Rect GetRect() const { return rect_; }
-	SDL_Texture* GetObject() { return p_object_; }
+	SDL_Texture* GetScreen() { return fact_screen; }
 
 	virtual bool LoadImage(std::string path, SDL_Renderer* screen);
 	void Render(SDL_Renderer* des, const  SDL_Rect* clip = NULL);
 	void Free();
 
 protected:
-	SDL_Texture* p_object_;
+	SDL_Texture* fact_screen;
 	SDL_Rect rect_;
 
 };
 
 
-#endif // !BASE_OBJECT_H_
+#endif // !BASIC_OBJECT_H_

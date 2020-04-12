@@ -1,10 +1,10 @@
 #ifndef EXPLOSIVE_EFFECT
 #define EXPLOSIVE_EFFECT
 
-#include "BaseObject.h"
+#include "BasicObject.h"
 #include "CommonFuntion.h"
 
-class ExplosiveEffectObject : public BaseObject
+class ExplosiveEffectObject : public BasicObject
 {
 public:
 	ExplosiveEffectObject();

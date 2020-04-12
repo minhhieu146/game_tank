@@ -1,13 +1,13 @@
 #include"CommonFuntion.h"
-#include"BaseObject.h"
-#include"Game_map.h"
+#include"BasicObject.h"
+#include"Game Map.h"
 #include"TankObject.h"
-#include"ImpTimer.h"
+#include"Time.h"
 #include"EnemyTankObject.h"
 #include"BulletObject.h"
 #include"Explosive Effect.h"
 
-BaseObject gBackground;
+BasicObject gBackground;
 bool InitData()
 {
 	bool success = true;
@@ -65,15 +65,15 @@ void close()
 std::vector<EnemyTankObject*> MakeEnemyList()
 {
 	std::vector<EnemyTankObject*> list_enemy;
-	EnemyTankObject* enemy_obj = new EnemyTankObject[3];
+	EnemyTankObject* enemy_obj = new EnemyTankObject[2];
 	for (int i = 0; i < 2; i++)
 	{
 		EnemyTankObject* pEnemy = (enemy_obj + i);
 		if (pEnemy != NULL)
 		{
 			pEnemy->LoadImage("tankup.png", gScreen);
-			pEnemy->set_x_pos_(1100.0);
-			pEnemy->set_y_pos_(100.0 + 200.0 * i);
+			pEnemy->set_x_location(1100.0);
+			pEnemy->set_y_location(100.0 + 200.0 * i);
 
 			BulletObject* pBullet = new BulletObject();
 			pEnemy->InitBullet(pBullet, gScreen);
@@ -86,7 +86,7 @@ std::vector<EnemyTankObject*> MakeEnemyList()
 
 int main(int agrc, char* agrv[])
 {
-	ImpTimer fps_timer;
+	TimeObject fps_time;
 
 	if (InitData() == FALSE)
 	{
@@ -97,34 +97,31 @@ int main(int agrc, char* agrv[])
 		return -1;
 	}
 
-	GameMap game_map;
+	GameMapObject game_map;
 	game_map.LoadMap("map/maptank.txt");
 	game_map.LoadTiles(gScreen);
 	
-	MainObject tank;
+	TankObject tank;
 	tank.LoadImage("tankrdown.png", gScreen);
 
 	std::vector<EnemyTankObject*> list_enemy = MakeEnemyList();
 	
 	ExplosiveEffectObject ex_enemy;
-	bool rec = ex_enemy.LoadImage("Explosion.png", gScreen);
-	if(rec ==false)
-	{
-		return -1;
-	}
-	ex_enemy.set_clip();
+	//bool rec = ex_enemy.LoadImage("Explosion.png", gScreen);
+	
+	
 
 	bool is_quit = false;
 	while(!is_quit)
 	{
-		fps_timer.start();
+		fps_time.start();
 		while (SDL_PollEvent(&gEvent) != 0)
 		{
 			if (gEvent.type == SDL_QUIT)
 			{
 				is_quit = true;
 			}
-			tank.HandelInput(gEvent, gScreen);
+			tank.InputKeyboard(gEvent, gScreen);
 		}
 		SDL_SetRenderDrawColor(gScreen, 255, 255, 255, 255);
 		SDL_RenderClear(gScreen);
@@ -134,9 +131,9 @@ int main(int agrc, char* agrv[])
 		Map map_data = game_map.getMap();
 
 		
-		tank.DoTank(map_data);
+		tank.MoveTank(map_data);
 		tank.Show(gScreen);
-		tank.HandleBullet(gScreen);
+		tank.BulletMove(gScreen);
 
 		for (int i = 0; i < list_enemy.size(); i++)
 		{
@@ -166,7 +163,7 @@ int main(int agrc, char* agrv[])
 					}
 				}
 
-				SDL_Rect rect_enemy = pEnemy->GetRectTank();
+				SDL_Rect rect_enemy = pEnemy->GetRectEnemyTank();
 				bool COLL = false;
 				COLL = SDL_CommonFunc::CheckCollision(rect_main_tank, rect_enemy);
 				if ( COLL == true ||colli == true)
@@ -206,15 +203,18 @@ int main(int agrc, char* agrv[])
 
 						if (coll == true)
 						{
-							for (int ex = 0; ex < 8; ex++)
-							{
+							
+
+							
+							/*
 								int  x_pos = p_bullet->GetRect().x - 50;
 								int y_pos = p_bullet->GetRect().y - 50;
-								ex_enemy.set_frame_number(ex);
+								ex_enemy.set_frame_number(4);
 								ex_enemy.SetRect(x_pos, y_pos);
+								SDL_Delay(100);
 								ex_enemy.Show(gScreen);
-							}
-
+							
+							*/
 							tank.RemoveBullet(i); 
 							EnemyTank->Free();
 							list_enemy.erase(list_enemy.begin() + j);
@@ -230,8 +230,9 @@ int main(int agrc, char* agrv[])
 		}
 
 		SDL_RenderPresent(gScreen);
+		
 
-		int real_imp_time = fps_timer.get_ticks();
+		int real_imp_time = fps_time.get_ticks();
 		int time_one_frame = 1000 / FRAME_PER_SECOND;
 		if (real_imp_time < time_one_frame)
 		{
@@ -241,7 +242,7 @@ int main(int agrc, char* agrv[])
 		}
 	}
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < list_enemy.size(); i++)
 	{
 		EnemyTankObject* pEnemy = list_enemy.at(i);
 		if (pEnemy != NULL)

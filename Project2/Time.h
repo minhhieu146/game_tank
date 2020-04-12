@@ -1,11 +1,11 @@
-#ifndef IMP_TIMER_H_
-#define IMP_TIMER_H_
+#ifndef TIME_H_
+#define TIME_H_
 
-class ImpTimer
+class TimeObject
 {
 public:
-	ImpTimer();
-	~ImpTimer();
+	TimeObject();
+	~TimeObject();
 
 	void start();
 	void stop();

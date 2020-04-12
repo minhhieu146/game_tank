@@ -2,17 +2,17 @@
 #define TANK_OBJECT_
 
 #include"CommonFuntion.h";
-#include"BaseObject.h";
+#include"BasicObject.h";
 #include<vector>
 #include"BulletObject.h"
 
 #define TANK_SPEED 5
 
-class MainObject : public BaseObject
+class TankObject : public BasicObject
 {
 public:
-	MainObject();
-	~MainObject();
+	TankObject();
+	~TankObject();
 
 	enum MoveType
 	{
@@ -23,10 +23,10 @@ public:
 	};
 	
 	bool LoadImage(std::string path, SDL_Renderer* screen);
-	void HandelInput(SDL_Event events, SDL_Renderer* screen);
+	void InputKeyboard(SDL_Event events, SDL_Renderer* screen);
 	void Show(SDL_Renderer* des);
 
-	void DoTank(Map& map_data);
+	void MoveTank(Map& map_data);
 	void CheckMap(Map& map_dada);
 
 
@@ -35,7 +35,7 @@ public:
 		p_bullet_list_ = bullet_list;
 	}
 	std::vector<BulletObject*> get_bullet_list_() const { return p_bullet_list_; }
-	void HandleBullet(SDL_Renderer* des);
+	void BulletMove(SDL_Renderer* des);
 	void RemoveBullet(const int& idx);
 
 	SDL_Rect GetRectTank();
@@ -43,11 +43,11 @@ public:
 private:
 
 	std::vector<BulletObject*> p_bullet_list_;
-	float x_val_;
-	float y_val_;
+	float x_change;
+	float y_change;
 
-	float x_pos_;
-	float y_pos_;
+	float x_location;
+	float y_location;
 
 	int width_frame_;
 	int	height_frame_;

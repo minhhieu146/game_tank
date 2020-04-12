@@ -1,20 +1,20 @@
 #include"EnemyTankObject.h"
-#include"BaseObject.h"
+#include"BasicObject.h"
 #include"CommonFuntion.h"
 #include"BulletObject.h"
 
 EnemyTankObject::EnemyTankObject()
 {
-	x_pos_ = 00.0;
-	y_pos_ = 00.0;
+	x_location = 0.0;
+	y_location = 0.0;
 	width_frame_ = 60;
 	height_frame_ = 60;
-	x_val_ = 0.0;
-	y_val_ = 0.0;
+	x_change = 0.0;
+	y_change = 0.0;
 	frame_ = 0;
 	direction = 0;
-	previous_x_pos_ = 0;
-	previous_y_pos_ = 0;
+	previous_x_location = 0;
+	previous_y_location = 0;
 	turningLimit = 0;
 	check_dir = -1;
 }
@@ -27,7 +27,7 @@ EnemyTankObject::~EnemyTankObject()
 
 bool EnemyTankObject::LoadImage(std::string path, SDL_Renderer* screen)
 {
-	bool ret = BaseObject::LoadImage(path, screen);
+	bool ret = BasicObject::LoadImage(path, screen);
 	return ret;
 }
 
@@ -57,11 +57,11 @@ void EnemyTankObject::Show(SDL_Renderer* des)
 		frame_clip[0].y = 0;
 		frame_clip[0].w = width_frame_;
 		frame_clip[0].h = height_frame_;
-		rect_.x = x_pos_;
-		rect_.y = y_pos_;
+		rect_.x = x_location;
+		rect_.y = y_location;
 		SDL_Rect* currenClip = &frame_clip[frame_];
-		SDL_Rect renderQuad = { rect_.x, rect_.y, width_frame_, height_frame_ };
-		SDL_RenderCopy(des, p_object_, currenClip, &renderQuad);
+		SDL_Rect render_region = { rect_.x, rect_.y, width_frame_, height_frame_ };
+		SDL_RenderCopy(des, fact_screen, currenClip, &render_region);
 
 }
 
@@ -100,33 +100,33 @@ void EnemyTankObject::MoveTank(Map& map_data)
 	{
 		if (direction == 1)
 		{
-			x_val_ = -(rand() % (7)+1);
-			y_val_ = 0;
+			x_change = -(rand() % (7)+1);
+			y_change = 0;
 			check_dir = 1;
 		}
 		else if (direction == 2)
 		{
-			x_val_ = rand() % (7)+1;
-			y_val_ = 0;
+			x_change = rand() % (7)+1;
+			y_change = 0;
 			check_dir = 2;
 		}
 		else if (direction == 3)
 		{
-			x_val_ = 0;
-			y_val_  = -(rand() % (7)+1);
+			x_change = 0;
+			y_change = -(rand() % (7)+1);
 			check_dir = 3;
 		}
 		else if (direction == 4)
 		{
-			x_val_ = 0;
-			y_val_ = rand() % (7)+1;
+			x_change = 0;
+			y_change = rand() % (7)+1;
 			check_dir = 4;
 		}
 
 		CheckMap(map_data);
 
 
-		if (previous_x_pos_ == x_pos_ && previous_y_pos_ == y_pos_)
+		if (previous_x_location == x_location && previous_y_location == y_location)
 		{
 			frame_stay_still++;
 			CheckMap(map_data);
@@ -158,46 +158,46 @@ void EnemyTankObject::MoveTank(Map& map_data)
 			okay = true;
 		}
 	}
-	previous_x_pos_ = x_pos_;
-	previous_y_pos_ = y_pos_;
+	previous_x_location = x_location;
+	previous_y_location = y_location;
 }
 
 
 
 void EnemyTankObject::CheckMap(Map& map_data)
 {
-	int x1 = 0;		//toa do ban dau
+	int x1 = 0;		//toa do ben trai
 	int x2 = 0;
 
-	int y1 = 0;		//toa do sau khi bam phim
+	int y1 = 0;		//toa do ben phai
 	int y2 = 0;
 
 	//check theo chieu ngang
 	int height_min = height_frame_ - 10;  
 
-	x1 = (x_pos_ + x_val_) / TILE_SIZE;
-	x2 = (x_pos_ + x_val_ + width_frame_ - 1) / TILE_SIZE;
+	x1 = (x_location + x_change) / TILE_SIZE;
+	x2 = (x_location + x_change + width_frame_ - 1) / TILE_SIZE;
 
-	y1 = y_pos_ / TILE_SIZE;
-	y2 = (y_pos_ + height_min - 1) / TILE_SIZE;
+	y1 = y_location / TILE_SIZE;
+	y2 = (y_location + height_min - 1) / TILE_SIZE;
 
 	if (x1 >= 0 && x2 < (MAX_MAP_X) && y1 >= 0 && y2 < MAX_MAP_Y)
 	{
-		if (x_val_ > 0)
+		if (x_change > 0)
 		{
 			if (map_data.tile[y1][x2] == 1 || map_data.tile[y2][x2] == 1)
 			{
-				x_pos_ = x2 * TILE_SIZE;
-				x_pos_ -= (width_frame_ + 1);
-				x_val_ = 0;
+				x_location = x2 * TILE_SIZE;
+				x_location -= (width_frame_ + 1);
+				x_change = 0;
 			}
 		}
-		else if (x_val_ < 0)
+		else if (x_change < 0)
 		{
 			if (map_data.tile[y1][x1] == 1 || map_data.tile[y2][x1] == 1)
 			{
-				x_pos_ = (x1 + 1)* TILE_SIZE;
-				x_val_ = 0;
+				x_location = (x1 + 1)* TILE_SIZE;
+				x_change = 0;
 
 			}
 		}
@@ -205,42 +205,42 @@ void EnemyTankObject::CheckMap(Map& map_data)
 	//check theo chieu doc
 
 	int width_min = width_frame_ - 10;
-	x1 = (x_pos_) / TILE_SIZE;
-	x2 = (x_pos_ + width_min) / TILE_SIZE;
-	y1 = (y_pos_ + y_val_) / TILE_SIZE;
-	y2 = (y_pos_ + y_val_ + height_frame_ - 1) / TILE_SIZE;
+	x1 = (x_location) / TILE_SIZE;
+	x2 = (x_location + width_min) / TILE_SIZE;
+	y1 = (y_location + y_change) / TILE_SIZE;
+	y2 = (y_location + y_change + height_frame_ - 1) / TILE_SIZE;
 
 	if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
 	{
-		if (y_val_ > 0)
+		if (y_change > 0)
 		{
 			if (map_data.tile[y2][x1] == 1 || map_data.tile[y2][x2] == 1)
 			{
-				y_pos_ = y2 * TILE_SIZE;
-				y_pos_ -= (height_frame_ + 1);
-				y_val_ = 0;
+				y_location = y2 * TILE_SIZE;
+				y_location -= (height_frame_ + 1);
+				y_change = 0;
 			}
 		}
-		else if (y_val_ < 0)
+		else if (y_change < 0)
 		{
 			if (map_data.tile[y1][x1] == 1 || map_data.tile[y1][x2] == 1)
 			{
-				y_pos_ = (y1 + 1)*TILE_SIZE;
-				y_val_ = 0;
+				y_location = (y1 + 1)*TILE_SIZE;
+				y_change = 0;
 			}
 		}
 	}
 
-	x_pos_ += x_val_;
-	y_pos_ += y_val_;
+	x_location += x_change;
+	y_location += y_change;
 
-	if (x_pos_ < 0 || x_pos_ + width_frame_ > SCREEN_WIDTH)
+	if (x_location < 0 || x_location + width_frame_ > SCREEN_WIDTH)
 	{
-		x_pos_ -= x_val_;
+		x_location -= x_change;
 	}
-	if (y_pos_ < 0 || y_pos_ + 64 > SCREEN_HEIGHT)
+	if (y_location < 0 || y_location + 64 > SCREEN_HEIGHT)
 	{
-		y_pos_ -= y_val_;
+		y_location -= y_change;
 	}
 	
 }
@@ -253,7 +253,7 @@ void EnemyTankObject::InitBullet(BulletObject* pBullet, SDL_Renderer* screen)
 	{
 		
 		pBullet->set_is_move(true);
-		pBullet->SetRect(x_pos_ + 5, y_pos_ + 10);
+		pBullet->SetRect(x_location + 5, y_location + 10);
 		bullet_list_.push_back(pBullet);
 	}
 }
@@ -270,7 +270,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			{
 				pBullet->LoadImage("BulletLeft.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_LEFT);
-				pBullet->set_x_val_(20);
+				pBullet->set_x_change(20);
 				bullet_distance = rect_.x - pBullet->GetRect().x;
 				
 			}
@@ -278,7 +278,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			{
 				pBullet->LoadImage("BulletRight.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_RIGHT);
-				pBullet->set_x_val_(20);
+				pBullet->set_x_change(20);
 				bullet_distance = -(rect_.x, pBullet->GetRect().x);
 
 			}
@@ -286,14 +286,14 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			{
 				pBullet->LoadImage("BulletUp.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_UP);
-				pBullet->set_y_val_(20);
+				pBullet->set_y_change(20);
 				bullet_distance = rect_.y - pBullet->GetRect().y;
 			}
 			else if (check_dir == 4)
 			{
 				pBullet->LoadImage("BulletDown.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_DOWN);
-				pBullet->set_y_val_(20);
+				pBullet->set_y_change(20);
 				bullet_distance = -(rect_.y - pBullet->GetRect().y);
 
 			}
@@ -301,7 +301,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			{
 				if (bullet_distance <= 300)
 				{
-					pBullet->HandleMove(x_limit, y_limit);
+					pBullet->Move(x_limit, y_limit);
 					pBullet->Render(screen);
 				}
 				else
@@ -313,7 +313,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			else
 			{
 				pBullet->set_is_move(true);
-				pBullet->SetRect(x_pos_ + 10, y_pos_);
+				pBullet->SetRect(x_change + 10, y_change);
 			}
 		}
 	}
@@ -334,7 +334,7 @@ void EnemyTankObject::RemoveBullet(const int& idx)
 	}
 }
 
-SDL_Rect EnemyTankObject::GetRectTank()
+SDL_Rect EnemyTankObject::GetRectEnemyTank()
 {
 	SDL_Rect rect;
 	rect.x = rect_.x;

@@ -3,27 +3,29 @@
 #define MAP_TILES 10
 
 #include"CommonFuntion.h";
-#include"BaseObject.h";
+#include"BasicObject.h";
 
-class TileMap : public BaseObject
+class TileMap : public BasicObject
 {
 public:
 	TileMap() { ; }
 	~TileMap() { ; }
 };
 
-class GameMap
+class GameMapObject
 {
 public: 
-	GameMap() { ; }
-	~GameMap() { ; }
+	GameMapObject() { ; }
+	~GameMapObject() { ; }
 
 	void LoadMap(const char* name);
 	void LoadTiles(SDL_Renderer* screen);
 	void DrawMap(SDL_Renderer* screen);
-	Map  getMap() const { return game_map_; };
+	Map  getMap() const { return game_map; };
 private:
-	Map game_map_;
+	Map game_map;
 	TileMap tile_map[MAP_TILES];
 };
+
+
 #endif // !

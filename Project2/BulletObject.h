@@ -1,10 +1,10 @@
 #ifndef BULLET_OBJECT_
 #define BULLET_OBJECT_
 
-#include"BaseObject.h"
+#include"BasicObject.h"
 #include"CommonFuntion.h"
 
-class BulletObject : public BaseObject
+class BulletObject : public BasicObject
 {
 public:
 	BulletObject();
@@ -19,21 +19,21 @@ public:
 
 	};
 
-	void set_x_val_(const int& xVal) { x_val_ = xVal; }
-	void set_y_val_(const int& yVal) { y_val_ = yVal; } 
-	int get_x_val_() const { return x_val_ ; }
-	int get_y_val_() const { return y_val_ ; }
+	void set_x_change(const int& xChange) { x_change = xChange; }
+	void set_y_change(const int& yChange) { y_change = yChange; } 
+	int get_x_change() const { return x_change ; }
+	int get_y_change() const { return y_change ; }
 
 	void set_bullet_direction(const int& bulletDirection) { bullet_direction = bulletDirection; }
 	int get_bullet_direction() const { return bullet_direction; }
 
 	void set_is_move(const bool& isMove) { is_move_ = isMove; }
 	bool get_is_move() const { return is_move_; }
-	void HandleMove(const int& x_boder_, const int& y_boder_);
+	void Move(const int& x_boder_, const int& y_boder_);
 	bool CheckMapForBullet(Map& map_data, const SDL_Rect& object1);
 private:
-	int x_val_;
-	int y_val_;
+	int x_change;
+	int y_change;
 	bool is_move_;
 	int bullet_direction; 
 };

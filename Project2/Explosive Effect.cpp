@@ -61,15 +61,15 @@ void ExplosiveEffectObject::set_clip()
 
 bool ExplosiveEffectObject::LoadImage(std::string path, SDL_Renderer* screen)
 {
-	bool rec = BaseObject::LoadImage(path, screen);
+	bool rec = BasicObject::LoadImage(path, screen);
 	return rec;
 }
 
 void ExplosiveEffectObject::Show(SDL_Renderer* des)
 {
-	
+	frame_number = 4;
 	SDL_Rect* current_clip = &frame_clip[frame_number];
 	SDL_Rect renderQuad = { rect_.x, rect_.y, 100, 100 };
 
-	SDL_RenderCopy(des, p_object_, current_clip, &renderQuad);
+	SDL_RenderCopy(des, fact_screen, current_clip, &renderQuad);
 }
