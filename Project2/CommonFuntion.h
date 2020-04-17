@@ -1,16 +1,19 @@
-#ifndef COMMON_FUNCTION_H_
+﻿#ifndef COMMON_FUNCTION_H_
 #define COMMON_FUNCTION_H_
 
 #include<Windows.h>
 #include<string>
 #include<SDL.h>
 #include<SDL_image.h>
+#include<SDL_mixer.h>
+#include<SDL_ttf.h>
 #include<vector>
 #include<time.h>
 
 static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gScreen = NULL;
 static SDL_Event gEvent;
+
 
 
 //SCREEN
@@ -22,6 +25,8 @@ const int SCREEN_BPP = 32;
 const int COLOR_KEY_R = 255;
 const int COLOR_KEY_G = 255;
 const int COLOR_KEY_B = 255;
+
+
 
 #define TILE_SIZE 64
 #define MAX_MAP_X 20
@@ -55,6 +60,9 @@ typedef struct Map
 namespace SDL_CommonFunc
 {
 	bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
+	int ShowMenu(SDL_Surface* des, TTF_Font* font);
 }
+
+
 
 #endif

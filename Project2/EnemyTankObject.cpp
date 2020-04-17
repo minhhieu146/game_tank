@@ -268,6 +268,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			int bullet_distance = 0;
 			if (check_dir == 1)
 			{
+				
 				pBullet->LoadImage("BulletLeft.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_LEFT);
 				pBullet->set_x_change(20);
@@ -276,6 +277,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			}
 			else if (check_dir == 2)
 			{
+				
 				pBullet->LoadImage("BulletRight.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_RIGHT);
 				pBullet->set_x_change(20);
@@ -284,6 +286,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			}
 			else if (check_dir == 3)
 			{
+				
 				pBullet->LoadImage("BulletUp.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_UP);
 				pBullet->set_y_change(20);
@@ -291,6 +294,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			}
 			else if (check_dir == 4)
 			{
+				
 				pBullet->LoadImage("BulletDown.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_DOWN);
 				pBullet->set_y_change(20);
@@ -313,7 +317,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			else
 			{
 				pBullet->set_is_move(true);
-				pBullet->SetRect(x_change + 10, y_change);
+				pBullet->SetRect(x_location + 10, y_location);
 			}
 		}
 	}
@@ -328,7 +332,7 @@ void EnemyTankObject::RemoveBullet(const int& idx)
 		bullet_list_.erase(bullet_list_.begin() + idx);
 		if (pBullet != NULL)
 		{
-			delete pBullet;
+			delete pBullet; 
 			pBullet = NULL;
 		}
 	}

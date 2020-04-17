@@ -6,12 +6,15 @@
 #include"EnemyTankObject.h"
 #include"BulletObject.h"
 #include"Explosive Effect.h"
+#include"TextObject.h"
 
 BasicObject gBackground;
+TTF_Font* font_text = NULL;
+
 bool InitData()
 {
 	bool success = true;
-	int ret = SDL_Init(SDL_INIT_VIDEO);
+	int ret = SDL_Init(SDL_INIT_EVERYTHING);
 	if (ret < 0)
 	{
 		return false;
@@ -38,6 +41,13 @@ bool InitData()
 				success = false;
 
 		}
+		if (TTF_Init() == -1)
+		{
+			success = false; 
+		}
+		
+		font_text = TTF_OpenFont("font text//dlxfont_.ttf", 12);
+
 	}
 	return success;
 }
@@ -48,13 +58,19 @@ bool LoadBackground()
 	if (ret == FALSE)return false;
 	return true;
 }
+BasicObject game_over;
+bool LoadGameOver()
+{
+	bool ret = game_over.LoadImage("GameOver.png", gScreen);
+	if (ret == FALSE) return false;
+	return true;
+}
 
 void close()
 {
 	gBackground.Free();
 	SDL_DestroyRenderer(gScreen);
 	gScreen = NULL;
-
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
 
@@ -65,19 +81,17 @@ void close()
 std::vector<EnemyTankObject*> MakeEnemyList()
 {
 	std::vector<EnemyTankObject*> list_enemy;
-	EnemyTankObject* enemy_obj = new EnemyTankObject[2];
-	for (int i = 0; i < 2; i++)
+	EnemyTankObject* enemy_obj = new EnemyTankObject[5];
+	for (int i = 0; i < 5; i++)
 	{
 		EnemyTankObject* pEnemy = (enemy_obj + i);
 		if (pEnemy != NULL)
 		{
 			pEnemy->LoadImage("tankup.png", gScreen);
 			pEnemy->set_x_location(1100.0);
-			pEnemy->set_y_location(100.0 + 200.0 * i);
-
+			pEnemy->set_y_location(100.0 + 100.0 * i); 
 			BulletObject* pBullet = new BulletObject();
 			pEnemy->InitBullet(pBullet, gScreen);
-
 			list_enemy.push_back(pEnemy);
 		}
 	}
@@ -107,8 +121,11 @@ int main(int agrc, char* agrv[])
 	std::vector<EnemyTankObject*> list_enemy = MakeEnemyList();
 	
 	ExplosiveEffectObject ex_enemy;
-	//bool rec = ex_enemy.LoadImage("Explosion.png", gScreen);
-	
+	bool rec = ex_enemy.LoadImage("Explosion.png", gScreen);
+	if (rec != NULL)
+	{
+		ex_enemy.set_clip();
+	}
 	
 
 	bool is_quit = false;
@@ -168,10 +185,12 @@ int main(int agrc, char* agrv[])
 				COLL = SDL_CommonFunc::CheckCollision(rect_main_tank, rect_enemy);
 				if ( COLL == true ||colli == true)
 				{
+					
+					
 						pEnemy->Free();
-						close();
 						SDL_Quit();
-						return 0;
+						close();
+						return 0;				
 				}
 
 			}
@@ -204,17 +223,16 @@ int main(int agrc, char* agrv[])
 						if (coll == true)
 						{
 							
-
-							
-							/*
-								int  x_pos = p_bullet->GetRect().x - 50;
-								int y_pos = p_bullet->GetRect().y - 50;
-								ex_enemy.set_frame_number(4);
-								ex_enemy.SetRect(x_pos, y_pos);
-								SDL_Delay(100);
+							for (int ex = 0; ex < 8; ex++)
+							{
+								int x_location = bRect.x - 50;
+								int y_location = bRect.y - 50;
+								ex_enemy.set_frame_number(ex);
+								ex_enemy.SetRect(x_location, y_location);
 								ex_enemy.Show(gScreen);
+								
+							}
 							
-							*/
 							tank.RemoveBullet(i); 
 							EnemyTank->Free();
 							list_enemy.erase(list_enemy.begin() + j);

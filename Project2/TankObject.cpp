@@ -46,7 +46,7 @@ void TankObject::Show(SDL_Renderer* des)
 {
 	if (status_ == MOVE_LEFT)
 	{
-		LoadImage("tankleft.png", des);	
+		LoadImage("tankleft.png", des);
 		
 		width_frame_ = rect_.w / 8;
 		height_frame_ = rect_.h;
@@ -58,7 +58,7 @@ void TankObject::Show(SDL_Renderer* des)
 	else
 		if(status_ == MOVE_RIGHT)
 	{
-		LoadImage("tankright.png", des);
+			LoadImage("tankright.png", des);
 		
 		width_frame_ = rect_.w / 8;
 		height_frame_ = rect_.h;
@@ -264,6 +264,7 @@ void TankObject::RemoveBullet(const int& idx)
 		{
 			delete pBullet;
 			pBullet = NULL;
+
 		}
 	}
 }
@@ -305,7 +306,7 @@ void TankObject::CheckMap(Map& map_data)
 	int y2 = 0;
 
 	//check theo chieu ngang
-	int height_min = height_frame_ - 10;
+	int height_min = height_frame_ - 15;
 	
 	x1 = (x_location + x_change) / TILE_SIZE;
 	x2 = (x_location + x_change + width_frame_ - 1) / TILE_SIZE;
@@ -375,4 +376,3 @@ void TankObject::CheckMap(Map& map_data)
 		y_location -= y_change;
 	}
 }
-

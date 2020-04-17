@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\SDL2-2.0.12\include;$(ProjectDir)\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL2-2.0.12\lib\x86;$(ProjectDir)\SDL2_image-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\MyPC\source\repos\Battle Tank\Project2\SDL2_mixer-2.0.4\include;C:\Users\MyPC\source\repos\Battle Tank\Project2\SDL2_ttf-2.0.15\include;$(ProjectDir)\SDL2-2.0.12\include;$(ProjectDir)\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\MyPC\source\repos\Battle Tank\Project2\SDL2_ttf-2.0.15\lib\x86;C:\Users\MyPC\source\repos\Battle Tank\Project2\SDL2_mixer-2.0.4\lib\x86;$(ProjectDir)\SDL2-2.0.12\lib\x86;$(ProjectDir)\SDL2_image-2.0.5\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,7 +83,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,6 +134,7 @@
     <ClCompile Include="EnemyTankObject.cpp" />
     <ClCompile Include="Explosive Effect.cpp" />
     <ClCompile Include="Game Map.cpp" />
+    <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TankObject.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="EnemyTankObject.h" />
     <ClInclude Include="Explosive Effect.h" />
     <ClInclude Include="Game Map.h" />
+    <ClInclude Include="TextObject.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TankObject.h" />
   </ItemGroup>

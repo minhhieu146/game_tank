@@ -11,7 +11,7 @@ public:
 	~ExplosiveEffectObject();
 
 	void set_clip();
-	void set_frame_number(int fr_number) { frame_number = fr_number; }
+	void set_frame_number(const int& fr_number) { frame_number = fr_number; }
 	void Show(SDL_Renderer* des);
 	bool LoadImage(std::string path, SDL_Renderer* screen);
 

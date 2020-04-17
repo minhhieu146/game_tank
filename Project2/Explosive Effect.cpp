@@ -52,10 +52,6 @@ void ExplosiveEffectObject::set_clip()
 	frame_clip[7].w = 100;
 	frame_clip[7].h = 100;
 
-	frame_clip[8].x = 800;
-	frame_clip[8].y = 0;
-	frame_clip[8].w = 100;
-	frame_clip[8].h = 100;
 }
 
 
@@ -67,7 +63,6 @@ bool ExplosiveEffectObject::LoadImage(std::string path, SDL_Renderer* screen)
 
 void ExplosiveEffectObject::Show(SDL_Renderer* des)
 {
-	frame_number = 4;
 	SDL_Rect* current_clip = &frame_clip[frame_number];
 	SDL_Rect renderQuad = { rect_.x, rect_.y, 100, 100 };
 
