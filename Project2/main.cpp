@@ -7,6 +7,8 @@
 #include"BulletObject.h"
 #include"Explosive Effect.h"
 #include"TextObject.h"
+#include"LoadTexture.h"
+#include"MouseButton.h"
 
 BasicObject gBackground;
 TTF_Font* font_text = NULL;
@@ -66,6 +68,14 @@ bool LoadGameOver()
 	return true;
 }
 
+BasicObject game_menu;
+bool Load_Menu()
+{
+	bool ret = game_menu.LoadImage("map-game.png", gScreen);
+	if (ret == FALSE) return false;
+	return true;
+}
+
 void close()
 {
 	gBackground.Free();
@@ -98,6 +108,9 @@ std::vector<EnemyTankObject*> MakeEnemyList()
 	return list_enemy;
 }
 
+Gallery* gallery = nullptr; // global picture manager
+MouseButton gButton;
+
 int main(int agrc, char* agrv[])
 {
 	TimeObject fps_time;
@@ -110,6 +123,42 @@ int main(int agrc, char* agrv[])
 	{
 		return -1;
 	}
+	if (LoadGameOver() == FALSE)
+	{
+		return -1;
+	}
+	if (Load_Menu() == FALSE)
+	{
+		return -1;
+	}
+	bool quit = false;
+	while (!quit)
+	{
+		while (SDL_PollEvent(&gEvent) != 0)
+		{
+			if (gEvent.type == SDL_QUIT)
+			{
+				SDL_Quit();
+				close();
+				return 0;
+			}
+			else
+			{
+				bool check = gButton.HandleEvent(&gEvent);
+				if (check == TRUE)
+				{
+					SDL_SetRenderDrawColor(gScreen, 255, 255, 255, 255);
+					SDL_RenderClear(gScreen);
+					quit = true;
+				}
+			}
+		}
+
+		game_menu.Render(gScreen);
+		SDL_RenderPresent(gScreen);
+	}
+	
+
 
 	GameMapObject game_map;
 	game_map.LoadMap("map/maptank.txt");
@@ -127,8 +176,8 @@ int main(int agrc, char* agrv[])
 		ex_enemy.set_clip();
 	}
 	
-
 	bool is_quit = false;
+
 	while(!is_quit)
 	{
 		fps_time.start();
@@ -188,9 +237,11 @@ int main(int agrc, char* agrv[])
 					
 					
 						pEnemy->Free();
-						SDL_Quit();
-						close();
-						return 0;				
+						game_over.Render(gScreen, NULL);
+							//SDL_Quit();
+							//close();
+						//	return 0;
+						
 				}
 
 			}
@@ -246,7 +297,7 @@ int main(int agrc, char* agrv[])
 				}
 			}
 		}
-
+		
 		SDL_RenderPresent(gScreen);
 		
 

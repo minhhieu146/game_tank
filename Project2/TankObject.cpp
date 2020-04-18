@@ -1,6 +1,7 @@
 #include"TankObject.h"
 #include"BulletObject.h"
 #include"Game Map.h"
+#include"LoadTexture.h"
 
 TankObject::TankObject()
 {

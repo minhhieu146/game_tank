@@ -13,7 +13,7 @@
 static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gScreen = NULL;
 static SDL_Event gEvent;
-
+static SDL_Texture* gTexture = NULL;
 
 
 //SCREEN
@@ -60,7 +60,6 @@ typedef struct Map
 namespace SDL_CommonFunc
 {
 	bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
-	int ShowMenu(SDL_Surface* des, TTF_Font* font);
 }
 
 

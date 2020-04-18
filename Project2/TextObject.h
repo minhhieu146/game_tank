@@ -2,8 +2,9 @@
 #define TEXT_OBJ_
 
 #include"CommonFuntion.h"
+#include"BasicObject.h"
 
-class TextObject
+class TextObject : public BasicObject
 {
 public:
 	TextObject();
@@ -14,7 +15,7 @@ public:
 	void SetColor(Uint8 red, Uint8 green, Uint8 blue);
 	bool LoadFromRenderText(TTF_Font* font, SDL_Renderer* des);
 	void Free();
-	void RenderText(SDL_Renderer* des, SDL_Rect* clip, int x_location_, int y_location_);
+	void RenderText(SDL_Renderer* des, int x_location_, int y_location_, SDL_Rect* clip);
 	int GetWidth() const { return width; }
 	int GetHeight() const { return height; }
 	

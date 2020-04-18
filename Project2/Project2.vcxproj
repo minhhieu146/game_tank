@@ -134,6 +134,8 @@
     <ClCompile Include="EnemyTankObject.cpp" />
     <ClCompile Include="Explosive Effect.cpp" />
     <ClCompile Include="Game Map.cpp" />
+    <ClCompile Include="LoadTexture.cpp" />
+    <ClCompile Include="MouseButton.cpp" />
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="main.cpp" />
@@ -146,6 +148,8 @@
     <ClInclude Include="EnemyTankObject.h" />
     <ClInclude Include="Explosive Effect.h" />
     <ClInclude Include="Game Map.h" />
+    <ClInclude Include="LoadTexture.h" />
+    <ClInclude Include="MouseButton.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TankObject.h" />
