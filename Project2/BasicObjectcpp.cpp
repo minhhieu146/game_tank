@@ -1,4 +1,4 @@
-
+﻿
 #include"BasicObject.h"
 
 BasicObject::BasicObject()
@@ -21,7 +21,7 @@ bool BasicObject::LoadImage(std::string path, SDL_Renderer* screen)
 	SDL_Surface* load_surface = IMG_Load(path.c_str());
 	if (load_surface != NULL)
 	{
-		SDL_SetColorKey(load_surface, SDL_TRUE, SDL_MapRGB(load_surface->format, COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
+		SDL_SetColorKey(load_surface, SDL_TRUE, SDL_MapRGB(load_surface->format, 255, 255, 255));		//xóa nền 
 		new_surface = SDL_CreateTextureFromSurface(screen, load_surface);
 		if (new_surface != NULL)
 		{
@@ -31,15 +31,14 @@ bool BasicObject::LoadImage(std::string path, SDL_Renderer* screen)
 
 		SDL_FreeSurface(load_surface);
 	}
-
 	fact_screen = new_surface;
 	return  fact_screen != NULL;
 	
 }
 
-void BasicObject::Render(SDL_Renderer* des, const SDL_Rect* clip)
+void BasicObject::Render(SDL_Renderer* des, const SDL_Rect* clip)			//render lên màn hình
 {
-	SDL_Rect render_region = { rect_.x, rect_.y, rect_.w, rect_.h };
+	SDL_Rect render_region = { rect_.x, rect_.y, rect_.w, rect_.h };		// tọa độ, chiều rộng , chiều cao ảnh
 
 	SDL_RenderCopy(des, fact_screen, clip, &render_region);
 }

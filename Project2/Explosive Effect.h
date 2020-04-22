@@ -2,7 +2,7 @@
 #define EXPLOSIVE_EFFECT
 
 #include "BasicObject.h"
-#include "CommonFuntion.h"
+#include "SDL_utils.h"
 
 class ExplosiveEffectObject : public BasicObject
 {

@@ -1,22 +1,25 @@
 #include"TankObject.h"
 #include"BulletObject.h"
 #include"Game Map.h"
-#include"LoadTexture.h"
 
 TankObject::TankObject()
 {
-	frame_ = 0;
+	
 	x_location = 100;
 	y_location = 300;
 	x_change = 0;
 	y_change = 0;
-	width_frame_ = 0;
-	height_frame_ = 0;
+	width_frame_ = 60;
+	height_frame_ = 64;
 	status_ = -1;
 	input_type_.left_ = 0;
 	input_type_.right_ = 0;
 	input_type_.up_ = 0;
 	input_type_.down_ = 0;
+	frame_.x = 0;
+	frame_.y = 0; 
+	frame_.w = width_frame_;
+	frame_.h = height_frame_;
 }
 
 TankObject::~TankObject()
@@ -37,7 +40,7 @@ SDL_Rect TankObject::GetRectTank()
 	SDL_Rect rect;
 	rect.x = rect_.x;
 	rect.y = rect_.y;
-	rect.w = 64;
+	rect.w = 60;
 	rect.h = 64;
 	return rect;
 }
@@ -49,36 +52,26 @@ void TankObject::Show(SDL_Renderer* des)
 	{
 		LoadImage("tankleft.png", des);
 		
-		width_frame_ = rect_.w / 8;
+		width_frame_ = rect_.w;
 		height_frame_ = rect_.h;
-		frame_clip_[0].x = 0;
-		frame_clip_[0].y = 0;
-		frame_clip_[0].w = width_frame_;
-		frame_clip_[0].h = height_frame_;
+		
 	}
 	else
 		if(status_ == MOVE_RIGHT)
 	{
 			LoadImage("tankright.png", des);
 		
-		width_frame_ = rect_.w / 8;
+		width_frame_ = rect_.w;
 		height_frame_ = rect_.h;
-		frame_clip_[0].x = 0;
-		frame_clip_[0].y = 0;
-		frame_clip_[0].w = width_frame_;
-		frame_clip_[0].h = height_frame_;
+		
 	}
 		else if (status_ == MOVE_UP)
 		{
 			LoadImage("tankup.png", des);
 			
 			width_frame_ = rect_.w;
-			height_frame_ = rect_.h / 8;
-			frame_clip_[0].x = 0;
-			frame_clip_[0].y = 0;
-			frame_clip_[0].w = width_frame_;
-			frame_clip_[0].h = height_frame_;
-
+			height_frame_ = rect_.h;
+			
 		}
 		else if (status_ = MOVE_DOWN)
 		{
@@ -86,20 +79,17 @@ void TankObject::Show(SDL_Renderer* des)
 			LoadImage("tankdown.png", des);
 			
 			width_frame_ = rect_.w;
-			height_frame_ = rect_.h / 8;
-			frame_clip_[0].x = 0;
-			frame_clip_[0].y = 0;
-			frame_clip_[0].w = width_frame_;
-			frame_clip_[0].h = height_frame_;
+			height_frame_ = rect_.h;
+			
 		}
 
 	rect_.x = x_location;	//toa do tank
 	rect_.y = y_location;
 
-	SDL_Rect* current_clip = &frame_clip_[frame_];
+	SDL_Rect* rect_main_tank = &frame_;
 	SDL_Rect render_region = { rect_.x, rect_.y, width_frame_, height_frame_ };
 
-	SDL_RenderCopy(des, fact_screen, current_clip, &render_region );
+	SDL_RenderCopy(des, fact_screen, rect_main_tank, &render_region );
 }
 
 void TankObject::InputKeyboard(SDL_Event events, SDL_Renderer* screen)
@@ -198,27 +188,34 @@ void TankObject::InputKeyboard(SDL_Event events, SDL_Renderer* screen)
 			{
 				bullet->LoadImage("BulletRight.png", screen);
 				bullet->set_bullet_direction(BulletObject::DIR_RIGHT);
-			bullet->set_x_change(20);
+				bullet->SetRect(this->rect_.x + 30, this->rect_.y + 18);
+				bullet->set_x_change(20);
+				Mix_PlayChannel(-1, gSoundBullet, 0);
 			}
 			else if (status_ == MOVE_LEFT)
 			{
 				bullet->LoadImage("BulletLeft.png", screen);
 				bullet->set_bullet_direction(BulletObject::DIR_LEFT);
+				bullet->SetRect(this->rect_.x + 15, this->rect_.y +18);
 				bullet->set_x_change(20);
+				Mix_PlayChannel(-1, gSoundBullet, 0);
 			}
 			else if (status_ == MOVE_UP)
 			{
 				bullet->LoadImage("BulletUp.png", screen);
 				bullet->set_bullet_direction(BulletObject::DIR_UP);
+				bullet->SetRect(this->rect_.x + 15, this->rect_.y +5);
 				bullet->set_y_change(20);
+				Mix_PlayChannel(-1, gSoundBullet, 0);
 			}
 			else if (status_ == MOVE_DOWN)
 			{
 				bullet->LoadImage("BulletDown.png", screen);
 				bullet->set_bullet_direction(BulletObject::DIR_DOWN);
+				bullet->SetRect(this->rect_.x + 15, this->rect_.y + 20);
 				bullet->set_y_change(20);
+				Mix_PlayChannel(-1, gSoundBullet, 0);
 			}
-			bullet->SetRect(this->rect_.x + width_frame_ - 65, this->rect_.y + height_frame_ * 0.5 - 20);
 			bullet->set_is_move(true);
 
 			p_bullet_list_.push_back(bullet);

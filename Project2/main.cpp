@@ -1,4 +1,4 @@
-#include"CommonFuntion.h"
+﻿#include"SDL_utils.h"
 #include"BasicObject.h"
 #include"Game Map.h"
 #include"TankObject.h"
@@ -6,62 +6,171 @@
 #include"EnemyTankObject.h"
 #include"BulletObject.h"
 #include"Explosive Effect.h"
-#include"TextObject.h"
-#include"LoadTexture.h"
 #include"MouseButton.h"
 
-BasicObject gBackground;
-TTF_Font* font_text = NULL;
 
-bool InitData()
+
+bool CheckCollision(const SDL_Rect& a, const SDL_Rect& b)			//hàm check va chạm giữa 2 object
 {
-	bool success = true;
-	int ret = SDL_Init(SDL_INIT_EVERYTHING);
-	if (ret < 0)
-	{
-		return false;
-	}
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+	int left_a = a.x + 7;
+	int right_a = a.x + a.w - 7;
+	int top_a = a.y + 7;
+	int bottom_a = a.y + a.h - 7;
 
-	gWindow = SDL_CreateWindow("Game Battle Tank", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	if (gWindow == NULL)
-	{
-		success = false;
-	}
-	else
-	{
-		gScreen = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-		if (gScreen == NULL)
-		{
-			success = false;
-		}
-		else
-		{
-			SDL_SetRenderDrawColor(gScreen, 255, 255, 255, 255);
-			int imgFlats = IMG_INIT_PNG;
-			if (!(IMG_Init(imgFlats) && imgFlats))
-				success = false;
+	int left_b = b.x + 7;
+	int right_b = b.x + b.w - 7;
+	int top_b = b.y + 7;
+	int bottom_b = b.y + b.h - 7;
 
-		}
-		if (TTF_Init() == -1)
+	// Case 1: size object 1 < size object 2
+	if (left_a > left_b && left_a < right_b)
+	{
+		if (top_a > top_b && top_a < bottom_b)
 		{
-			success = false; 
+			return true;
 		}
-		
-		font_text = TTF_OpenFont("font text//dlxfont_.ttf", 12);
-
 	}
-	return success;
+
+	if (left_a > left_b && left_a < right_b)
+	{
+		if (bottom_a > top_b && bottom_a < bottom_b)
+		{
+			return true;
+		}
+	}
+
+	if (right_a > left_b && right_a < right_b)
+	{
+		if (top_a > top_b && top_a < bottom_b)
+		{
+			return true;
+		}
+	}
+
+	if (right_a > left_b && right_a < right_b)
+	{
+		if (bottom_a > top_b && bottom_a < bottom_b)
+		{
+			return true;
+		}
+	}
+
+	if (bottom_a < top_b && bottom_a > bottom_b)
+	{
+		if (right_a > left_b && right_a < right_b)
+		{
+			return true;
+		}
+	}
+
+	if (bottom_a < top_b && bottom_a > bottom_b)
+	{
+		if (left_a > left_b && left_a < right_b)
+		{
+			return true;
+		}
+	}
+
+	if (top_a > top_b && top_a < bottom_b)
+	{
+		if (right_a > left_b && right_a < right_b)
+		{
+			return true;
+		}
+	}
+
+
+	if (top_a > top_b && top_a < bottom_b)
+	{
+		if (left_a > left_b && left_a < right_b)
+		{
+			return true;
+		}
+	}
+	// Case 2: size object 1 > size object 2
+	if (left_b > left_a && left_b < right_a)
+	{
+		if (top_b > top_a && top_b < bottom_a)
+		{
+			return true;
+		}
+	}
+
+	if (left_b > left_a && left_b < right_a)
+	{
+		if (bottom_b > top_a && bottom_b < bottom_a)
+		{
+			return true;
+		}
+	}
+
+	if (right_b > left_a && right_b < right_a)
+	{
+		if (top_b > top_a && top_b < bottom_a)
+		{
+			return true;
+		}
+	}
+
+	if (right_b > left_a && right_b < right_a)
+	{
+		if (bottom_b > top_a && bottom_b < bottom_a)
+		{
+			return true;
+		}
+	}
+
+	if (bottom_a > top_b && bottom_a < bottom_b)
+	{
+		if (right_a > left_b && right_a < right_b)
+		{
+			return true;
+		}
+	}
+
+	if (bottom_a > top_b && bottom_a < bottom_b)
+	{
+		if (left_a > left_b && left_a < right_b)
+		{
+			return true;
+		}
+	}
+
+	if (top_a < bottom_b && top_a > bottom_b)
+	{
+		if (right_a > left_b && right_a < right_b)
+		{
+			return true;
+		}
+	}
+
+	if (top_a < bottom_b && top_a > bottom_b)
+	{
+		if (left_a > left_b && left_a < right_b)
+		{
+			return true;
+		}
+	}
+
+	// Case 3: size object 1 = size object 2
+	if (top_a == top_b && right_a == right_b && bottom_a == bottom_b)
+	{
+		return true;
+	}
+
+	return false;
 }
 
-bool LoadBackground()
+
+BasicObject gBackground;
+bool LoadBackground()													//load background
 {
 	bool ret = gBackground.LoadImage("maptank.png", gScreen);
 	if (ret == FALSE)return false;
 	return true;
 }
 BasicObject game_over;
-bool LoadGameOver()
+bool LoadGameOver()														//load game over khi thua
 {
 	bool ret = game_over.LoadImage("GameOver.png", gScreen);
 	if (ret == FALSE) return false;
@@ -69,11 +178,40 @@ bool LoadGameOver()
 }
 
 BasicObject game_menu;
-bool Load_Menu()
+bool Load_Menu()													// load menu để vào game
 {
-	bool ret = game_menu.LoadImage("map-game.png", gScreen);
+	bool ret = game_menu.LoadImage("menu game.png", gScreen);
 	if (ret == FALSE) return false;
 	return true;
+}
+
+BasicObject game_victory;
+bool Load_victory()														//load ảnh chiến thắng
+{
+	bool ret = game_victory.LoadImage("victory.png", gScreen);
+	if (ret == FALSE) return false;
+	return true;
+}
+
+  
+std::vector<EnemyTankObject*> MakeEnemyList()					//tạo vector chứa bot
+{
+	std::vector<EnemyTankObject*> list_enemy;
+	EnemyTankObject* enemy_obj = new EnemyTankObject[5];
+	for (int i = 0; i < 5; i++)
+	{
+		EnemyTankObject* pEnemy = (enemy_obj + i);
+		if (pEnemy != NULL)
+		{
+			pEnemy->LoadImage("enemytankup.png", gScreen);		//load bot lên
+			pEnemy->set_x_location(1100.0);						// set vị trí cho bot
+			pEnemy->set_y_location(100.0 + 100.0 * i); 
+			BulletObject* pBullet = new BulletObject();			// tạo đạn cho bot
+			pEnemy->InitBullet(pBullet, gScreen);	
+			list_enemy.push_back(pEnemy);						//thêm vào vector chứa đạn
+		}
+	}
+	return list_enemy;
 }
 
 void close()
@@ -85,40 +223,17 @@ void close()
 	gWindow = NULL;
 
 	IMG_Quit();
-	SDL_Quit(); 
-}
-  
-std::vector<EnemyTankObject*> MakeEnemyList()
-{
-	std::vector<EnemyTankObject*> list_enemy;
-	EnemyTankObject* enemy_obj = new EnemyTankObject[5];
-	for (int i = 0; i < 5; i++)
-	{
-		EnemyTankObject* pEnemy = (enemy_obj + i);
-		if (pEnemy != NULL)
-		{
-			pEnemy->LoadImage("tankup.png", gScreen);
-			pEnemy->set_x_location(1100.0);
-			pEnemy->set_y_location(100.0 + 100.0 * i); 
-			BulletObject* pBullet = new BulletObject();
-			pEnemy->InitBullet(pBullet, gScreen);
-			list_enemy.push_back(pEnemy);
-		}
-	}
-	return list_enemy;
+	SDL_Quit();
 }
 
-Gallery* gallery = nullptr; // global picture manager
 MouseButton gButton;
 
 int main(int agrc, char* agrv[])
 {
 	TimeObject fps_time;
 
-	if (InitData() == FALSE)
-	{
-		return -1;
-	}
+	InitSDL(gWindow, gScreen);
+	
 	if (LoadBackground() == FALSE)
 	{
 		return -1;
@@ -131,6 +246,11 @@ int main(int agrc, char* agrv[])
 	{
 		return -1;
 	}
+	if (Load_victory() == FALSE)
+	{
+		return -1;
+	}
+
 	bool quit = false;
 	while (!quit)
 	{
@@ -151,19 +271,24 @@ int main(int agrc, char* agrv[])
 					SDL_RenderClear(gScreen);
 					quit = true;
 				}
+				else if (check == FALSE)
+				{
+					game_menu.Render(gScreen);
+
+				}
 			}
 		}
 
-		game_menu.Render(gScreen);
 		SDL_RenderPresent(gScreen);
 	}
-	
+// cái trên là load menu và chờ cho chuột nhấn vào PLAY GAME mới cho chạy game
 
-
+	// load map
 	GameMapObject game_map;
-	game_map.LoadMap("map/maptank.txt");
+	game_map.LoadMap("map//maptank.txt");
 	game_map.LoadTiles(gScreen);
 	
+	//load tank
 	TankObject tank;
 	tank.LoadImage("tankrdown.png", gScreen);
 
@@ -176,8 +301,8 @@ int main(int agrc, char* agrv[])
 		ex_enemy.set_clip();
 	}
 	
+	int check_game_over = 0;
 	bool is_quit = false;
-
 	while(!is_quit)
 	{
 		fps_time.start();
@@ -190,64 +315,58 @@ int main(int agrc, char* agrv[])
 			tank.InputKeyboard(gEvent, gScreen);
 		}
 		SDL_SetRenderDrawColor(gScreen, 255, 255, 255, 255);
-		SDL_RenderClear(gScreen);
+		SDL_RenderClear(gScreen);	//xóa màn hình
 
-		gBackground.Render(gScreen, NULL);
-		game_map.DrawMap(gScreen); 
-		Map map_data = game_map.getMap();
+		gBackground.Render(gScreen, NULL);		//load background lên
+		game_map.DrawMap(gScreen);				// vẽ các vật cản lên
+
+		Map map_data = game_map.getMap();		//lấy dữ liệu các vật cản
 
 		
-		tank.MoveTank(map_data);
-		tank.Show(gScreen);
-		tank.BulletMove(gScreen);
+		tank.MoveTank(map_data);		//hàm di chuyển
+		tank.Show(gScreen);				// vẽ tank lên
+		tank.BulletMove(gScreen);		//
 
-		for (int i = 0; i < list_enemy.size(); i++)
+		for (int i = 0; i < list_enemy.size(); i++)		//tạo bot tank
 		{
 			EnemyTankObject* pEnemy = list_enemy.at(i);
 			if (pEnemy != NULL)
 			{
-				pEnemy->SetMapXY(map_data.start_x_, map_data.start_y_);
-				pEnemy->MakeBullet(gScreen, SCREEN_WIDTH, SCREEN_HEIGHT);
-				pEnemy->MoveTank(map_data);
-				pEnemy->Show(gScreen);
+				pEnemy->SetMapXY(map_data.start_x_, map_data.start_y_);			//
+				pEnemy->MakeBullet(gScreen, SCREEN_WIDTH, SCREEN_HEIGHT);		//cho bot bắn đạn
+				pEnemy->MoveTank(map_data);										//bot di chuyển
+				pEnemy->Show(gScreen);											// vẽ bot lên màn hình
 
-				SDL_Rect rect_main_tank = tank.GetRectTank();
+				SDL_Rect rect_main_tank = tank.GetRectTank();		// lấy tọa độ của tank chính
 				bool colli = false;
-				std::vector<BulletObject*> eBullet_list = pEnemy->get_bullet_list();
+				std::vector<BulletObject*> eBullet_list = pEnemy->get_bullet_list();		//tạo ra vetor chứa đạn của bot
 				for (int j = 0; j < eBullet_list.size(); j++)
 				{
 					BulletObject* eBullet = eBullet_list.at(j);
 					if (eBullet != NULL)
 					{
-						colli = SDL_CommonFunc::CheckCollision(eBullet->GetRect(), rect_main_tank);
+						colli = CheckCollision(eBullet->GetRect(), rect_main_tank);		//check va chạm của đạn bot với tank chính
 						if (colli == true)
 						{
-							pEnemy->RemoveBullet(j);
+							pEnemy->RemoveBullet(j);			//xóa đạn
 							break;
 						}
 		
 					}
 				}
 
-				SDL_Rect rect_enemy = pEnemy->GetRectEnemyTank();
+				SDL_Rect rect_enemy = pEnemy->GetRectEnemyTank();		//lấy tọa độ bot
 				bool COLL = false;
-				COLL = SDL_CommonFunc::CheckCollision(rect_main_tank, rect_enemy);
+				COLL = CheckCollision(rect_main_tank, rect_enemy);		//check va chạm giữa bot và tank
 				if ( COLL == true ||colli == true)
 				{
-					
-					
-						pEnemy->Free();
-						game_over.Render(gScreen, NULL);
-							//SDL_Quit();
-							//close();
-						//	return 0;
-						
+						check_game_over = 1;	
 				}
 
 			}
 		}
 
-		std::vector<BulletObject*> bullet_arr = tank.get_bullet_list_();
+		std::vector<BulletObject*> bullet_arr = tank.get_bullet_list_();		//vector đạn của tank
 		for (int i = 0; i < bullet_arr.size(); i++)
 		{
 			BulletObject* p_bullet = bullet_arr.at(i);
@@ -268,7 +387,7 @@ int main(int agrc, char* agrv[])
 						bRect.x = p_bullet->GetRect().x;
 						bRect.y = p_bullet->GetRect().y;
 
-						bool coll = SDL_CommonFunc::CheckCollision(bRect, eRect);
+						bool coll = CheckCollision(bRect, eRect);
 						bool coll_1 = p_bullet->CheckMapForBullet(map_data, bRect);	
 
 						if (coll == true)
@@ -297,7 +416,15 @@ int main(int agrc, char* agrv[])
 				}
 			}
 		}
-		
+		if (check_game_over == 1)
+		{
+			
+			game_over.Render(gScreen, NULL);
+		}
+		if (list_enemy.empty() == true)
+		{
+			game_victory.Render(gScreen, NULL);
+		}
 		SDL_RenderPresent(gScreen);
 		
 

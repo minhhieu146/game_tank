@@ -16,12 +16,12 @@ BulletObject::~BulletObject()
 
 }
 
-void BulletObject::Move(const int& x_boder_, const int& y_boder_)
+void BulletObject::Move(const int& x_max_, const int& y_max_)
 {
 	if (bullet_direction == DIR_RIGHT)
 	{
 		rect_.x += x_change;
-		if (rect_.x > x_boder_)
+		if (rect_.x > SCREEN_WIDTH)
 		{
 			is_move_ = false;
 		}
@@ -45,7 +45,7 @@ void BulletObject::Move(const int& x_boder_, const int& y_boder_)
 	else if (bullet_direction == DIR_DOWN)
 	{
 		rect_.y += y_change;
-		if (rect_.y > y_boder_)
+		if (rect_.y > SCREEN_HEIGHT)
 		{
 			is_move_ = false;
 		}

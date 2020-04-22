@@ -2,7 +2,7 @@
 #define GAME_MAP_H
 #define MAP_TILES 10
 
-#include"CommonFuntion.h";
+#include"SDL_utils.h";
 #include"BasicObject.h";
 
 class TileMap : public BasicObject

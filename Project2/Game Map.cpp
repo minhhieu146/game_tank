@@ -1,5 +1,5 @@
 ﻿#include"Game Map.h"
-void GameMapObject::LoadMap(const char* name)
+void GameMapObject::LoadMap(const char* name)  // ddùng để đọc dữ liệu từ file
 {
 	FILE* fp = NULL;
 	fopen_s(&fp, name, "rb");
@@ -35,9 +35,9 @@ void GameMapObject::LoadMap(const char* name)
 	fclose(fp);
 }
 
-void GameMapObject::LoadTiles(SDL_Renderer* screen)
+void GameMapObject::LoadTiles(SDL_Renderer* screen)  // 
 {
-	char tile_type[30];
+	char tile_type[10]; // số lượng vật thể có thể có trong map
 	FILE* fp = NULL;
 
 	for (int i = 0; i < MAP_TILES; i++)
@@ -52,10 +52,9 @@ void GameMapObject::LoadTiles(SDL_Renderer* screen)
 		tile_map[i].LoadImage(tile_type, screen);
 	}
 }
-// hàm trên là e coppy ạ
 
 
-void GameMapObject::DrawMap(SDL_Renderer* screen)
+void GameMapObject::DrawMap(SDL_Renderer* screen)  //vẽ map lên màn hình
 {
 	int x1 = 0;
 	int x2 = 0;

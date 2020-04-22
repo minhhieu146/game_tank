@@ -1,8 +1,8 @@
-#ifndef BULLET_OBJECT_
+﻿#ifndef BULLET_OBJECT_
 #define BULLET_OBJECT_
 
 #include"BasicObject.h"
-#include"CommonFuntion.h"
+#include"SDL_utils.h"
 
 class BulletObject : public BasicObject
 {
@@ -19,9 +19,9 @@ public:
 
 	};
 
-	void set_x_change(const int& xChange) { x_change = xChange; }
-	void set_y_change(const int& yChange) { y_change = yChange; } 
-	int get_x_change() const { return x_change ; }
+	void set_x_change(const int& xChange) { x_change = xChange; }						//set lượng thay đổi cho x
+	void set_y_change(const int& yChange) { y_change = yChange; }						//set lượng thay đổi cho y
+	int get_x_change() const { return x_change ; }										
 	int get_y_change() const { return y_change ; }
 
 	void set_bullet_direction(const int& bulletDirection) { bullet_direction = bulletDirection; }
@@ -29,8 +29,8 @@ public:
 
 	void set_is_move(const bool& isMove) { is_move_ = isMove; }
 	bool get_is_move() const { return is_move_; }
-	void Move(const int& x_boder_, const int& y_boder_);
-	bool CheckMapForBullet(Map& map_data, const SDL_Rect& object1);
+	void Move(const int& x_max_, const int& y_max_);						//hàm di chuyển cho đạn
+	bool CheckMapForBullet(Map& map_data, const SDL_Rect& object1);				// hàm check đạn với tường
 private:
 	int x_change;
 	int y_change;

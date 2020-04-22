@@ -1,7 +1,7 @@
-#ifndef LOAD_TEXTURE_H
-#define LOAD_TEXTURE_H
+#ifndef GALLERY_H
+#define GALLERY_H
 
-#include"CommonFuntion.h"
+#include"SDL_utils.h"
 
 class Gallery
 {

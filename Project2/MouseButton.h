@@ -1,7 +1,7 @@
 #ifndef MOUSE_BUTTON_H
 #define MOUSE_BUTTON_H
 
-#include"CommonFuntion.h"
+#include"SDL_utils.h"
 #include"BasicObject.h"
 class MouseButton : public BasicObject
 {
@@ -16,8 +16,7 @@ public:
 
 
 private:
-	int x_location;
-	int y_location;
+
 	SDL_Point mLocation;
 };
 

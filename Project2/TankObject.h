@@ -1,7 +1,7 @@
 #ifndef TANK_OBJECT_
 #define TANK_OBJECT_
 
-#include"CommonFuntion.h";
+#include"SDL_utils.h";
 #include"BasicObject.h";
 #include<vector>
 #include"BulletObject.h"
@@ -52,9 +52,8 @@ private:
 	int width_frame_;
 	int	height_frame_;
 
-	SDL_Rect frame_clip_[8];
+	SDL_Rect frame_;
 	Input input_type_;
-	int frame_;
 	int status_;
 };
 

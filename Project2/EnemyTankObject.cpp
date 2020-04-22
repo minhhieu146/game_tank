@@ -1,6 +1,6 @@
-#include"EnemyTankObject.h"
+﻿#include"EnemyTankObject.h"
 #include"BasicObject.h"
-#include"CommonFuntion.h"
+#include"SDL_utils.h"
 #include"BulletObject.h"
 
 EnemyTankObject::EnemyTankObject()
@@ -8,15 +8,18 @@ EnemyTankObject::EnemyTankObject()
 	x_location = 0.0;
 	y_location = 0.0;
 	width_frame_ = 60;
-	height_frame_ = 60;
+	height_frame_ = 64;
 	x_change = 0.0;
 	y_change = 0.0;
-	frame_ = 0;
 	direction = 0;
 	previous_x_location = 0;
 	previous_y_location = 0;
 	turningLimit = 0;
 	check_dir = -1;
+	frame_.x = 0;
+	frame_.y = 0;
+	frame_.w = width_frame_;
+	frame_.h = height_frame_;
 }
 
 EnemyTankObject::~EnemyTankObject()
@@ -35,41 +38,38 @@ void EnemyTankObject::Show(SDL_Renderer* des)
 {
 	if (direction == 1)
 	{
-		LoadImage("tankleft.png", des);
+		LoadImage("enemytankleft.png", des);
 		check_dir = 1;
 	}
 	else if (direction == 2)
 	{
-		LoadImage("tankright.png", des);
+		LoadImage("enemytankright.png", des);
 		check_dir = 2;
 	}
 	else if (direction == 3)
 	{
-		LoadImage("tankup.png", des);
+		LoadImage("enemytankup.png", des);
 		check_dir = 3;
 	}
 	else if (direction == 4)
 	{
-		LoadImage("tankdown.png", des);
+		LoadImage("enemytankdown.png", des);
 		check_dir = 4;
 	}
-		frame_clip[0].x = 0;
-		frame_clip[0].y = 0;
-		frame_clip[0].w = width_frame_;
-		frame_clip[0].h = height_frame_;
+
 		rect_.x = x_location;
 		rect_.y = y_location;
-		SDL_Rect* currenClip = &frame_clip[frame_];
+		SDL_Rect* rect_e_tank = &frame_;
 		SDL_Rect render_region = { rect_.x, rect_.y, width_frame_, height_frame_ };
-		SDL_RenderCopy(des, fact_screen, currenClip, &render_region);
+		SDL_RenderCopy(des, fact_screen, rect_e_tank, &render_region);
 
 }
 
 void EnemyTankObject::MoveTank(Map& map_data)
 {
-	srand((int)time(0));
+	srand(time(0) + rand());
 
-	if (turningLimit <= 0)
+	if (turningLimit <= 0)				// để có 1 khoảng thời gian chờ sauu khi đổi hướng 
 	{
 		direction = rand() % 4 + 1;
 		turningLimit = 50;
@@ -95,7 +95,7 @@ void EnemyTankObject::MoveTank(Map& map_data)
 
 	turningLimit--;
 
-	srand((int)time(0) + rand());
+	srand(time(0) + rand());
 	while (!okay)
 	{
 		if (direction == 1)
@@ -253,7 +253,7 @@ void EnemyTankObject::InitBullet(BulletObject* pBullet, SDL_Renderer* screen)
 	{
 		
 		pBullet->set_is_move(true);
-		pBullet->SetRect(x_location + 5, y_location + 10);
+		pBullet->SetRect(x_location + 22, y_location + 25);
 		bullet_list_.push_back(pBullet);
 	}
 }
@@ -268,8 +268,18 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			int bullet_distance = 0;
 			if (check_dir == 1)
 			{
-				
-				pBullet->LoadImage("BulletLeft.png", screen);
+				// t chỉ cho nhá chứ t ko code đâu vì ko sửa hết đc 
+				// m hiểu code m thì m sửa đc thôi
+				// /ví dụ chỗ này
+				// m có thấy là loadImage nó phải mất công đọc bộ nhớ r lại lưu vào biến texture của baseobject ko
+				// thay vì thế
+				// pBullet->texture = picture[EnemyBulletLeft] thế là xong
+				// máy ko cần load lại nữa và cũng ko cần delete texture nữa vì nó quanh đi quanh lại chỉ có 4 cái dùng quanh nó thôi
+				// vì nó đã đc load sẵn và lưu vào SDL_Texture * r mà biến này là biến con trỏ nên m dùng phép = nó sẽ là = con tror
+				//// ko tốn nhiếu vùng nhớ
+				//thế cái texture trên kia p khai báo như nào?
+				// cái nào trên kia ?
+				pBullet->LoadImage("EnemyBulletLeft.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_LEFT);
 				pBullet->set_x_change(20);
 				bullet_distance = rect_.x - pBullet->GetRect().x;
@@ -277,8 +287,8 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			}
 			else if (check_dir == 2)
 			{
-				
-				pBullet->LoadImage("BulletRight.png", screen);
+
+				pBullet->LoadImage("EnemyBulletRight.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_RIGHT);
 				pBullet->set_x_change(20);
 				bullet_distance = -(rect_.x, pBullet->GetRect().x);
@@ -287,7 +297,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			else if (check_dir == 3)
 			{
 				
-				pBullet->LoadImage("BulletUp.png", screen);
+				pBullet->LoadImage("EnemyBulletUp.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_UP);
 				pBullet->set_y_change(20);
 				bullet_distance = rect_.y - pBullet->GetRect().y;
@@ -295,7 +305,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			else if (check_dir == 4)
 			{
 				
-				pBullet->LoadImage("BulletDown.png", screen);
+				pBullet->LoadImage("EnemyBulletDown.png", screen); 
 				pBullet->set_bullet_direction(BulletObject::DIR_DOWN);
 				pBullet->set_y_change(20);
 				bullet_distance = -(rect_.y - pBullet->GetRect().y);
@@ -317,7 +327,7 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			else
 			{
 				pBullet->set_is_move(true);
-				pBullet->SetRect(x_location + 10, y_location);
+				pBullet->SetRect(x_location + 15, y_location + 20 );
 			}
 		}
 	}
