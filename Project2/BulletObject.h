@@ -3,6 +3,7 @@
 
 #include"BasicObject.h"
 #include"SDL_utils.h"
+#include"Gallery.h"
 
 class BulletObject : public BasicObject
 {

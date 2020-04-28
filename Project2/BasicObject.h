@@ -8,6 +8,9 @@ class BasicObject		//lớp cơ bản
 public:
 	BasicObject();
 	~BasicObject();
+	
+	SDL_Texture* fact_screen;
+	
 	void SetRect(const int& x, const int& y) {						//set tọa độ 
 		rect_.x = x;
 		rect_.y = y;
@@ -20,7 +23,6 @@ public:
 	void Free();
 
 protected:
-	SDL_Texture* fact_screen;
 	SDL_Rect rect_;
 
 };

@@ -1,6 +1,7 @@
 #include"BasicObject.h"
 #include"BulletObject.h"
 #include"EnemyTankObject.h"
+#include"Gallery.h"
 
 BulletObject::BulletObject()
 {

@@ -22,8 +22,8 @@ const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 32;
 
 //âm thanh
-static Mix_Chunk* gSoundBullet = NULL;
-static Mix_Chunk* gSoundBoom = NULL;
+static Mix_Music* gSoundBullet = NULL;
+static Mix_Music* gSoundBoom = NULL;
 
 
 //tile map

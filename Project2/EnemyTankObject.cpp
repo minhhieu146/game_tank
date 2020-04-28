@@ -2,6 +2,7 @@
 #include"BasicObject.h"
 #include"SDL_utils.h"
 #include"BulletObject.h"
+#include"Gallery.h"
 
 EnemyTankObject::EnemyTankObject()
 {
@@ -268,18 +269,8 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			int bullet_distance = 0;
 			if (check_dir == 1)
 			{
-				// t chỉ cho nhá chứ t ko code đâu vì ko sửa hết đc 
-				// m hiểu code m thì m sửa đc thôi
-				// /ví dụ chỗ này
-				// m có thấy là loadImage nó phải mất công đọc bộ nhớ r lại lưu vào biến texture của baseobject ko
-				// thay vì thế
-				// pBullet->texture = picture[EnemyBulletLeft] thế là xong
-				// máy ko cần load lại nữa và cũng ko cần delete texture nữa vì nó quanh đi quanh lại chỉ có 4 cái dùng quanh nó thôi
-				// vì nó đã đc load sẵn và lưu vào SDL_Texture * r mà biến này là biến con trỏ nên m dùng phép = nó sẽ là = con tror
-				//// ko tốn nhiếu vùng nhớ
-				//thế cái texture trên kia p khai báo như nào?
-				// cái nào trên kia ?
-				pBullet->LoadImage("EnemyBulletLeft.png", screen);
+				// pBullet->texture = picture[EnemyBulletLeft] 
+				pBullet->LoadImage("EnemyBulletLeft.png", gScreen);
 				pBullet->set_bullet_direction(BulletObject::DIR_LEFT);
 				pBullet->set_x_change(20);
 				bullet_distance = rect_.x - pBullet->GetRect().x;

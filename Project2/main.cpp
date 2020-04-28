@@ -7,20 +7,21 @@
 #include"BulletObject.h"
 #include"Explosive Effect.h"
 #include"MouseButton.h"
+#include"Gallery.h"
 
 
 
 bool CheckCollision(const SDL_Rect& a, const SDL_Rect& b)			//hàm check va chạm giữa 2 object
 {
-	int left_a = a.x + 7;
-	int right_a = a.x + a.w - 7;
-	int top_a = a.y + 7;
-	int bottom_a = a.y + a.h - 7;
+	int left_a = a.x + 5;
+	int right_a = a.x + a.w - 5;
+	int top_a = a.y + 5;
+	int bottom_a = a.y + a.h - 5;
 
-	int left_b = b.x + 7;
-	int right_b = b.x + b.w - 7;
-	int top_b = b.y + 7;
-	int bottom_b = b.y + b.h - 7;
+	int left_b = b.x + 5;
+	int right_b = b.x + b.w - 5;
+	int top_b = b.y + 5;
+	int bottom_b = b.y + b.h - 5;
 
 	// Case 1: size object 1 < size object 2
 	if (left_a > left_b && left_a < right_b)
@@ -193,6 +194,14 @@ bool Load_victory()														//load ảnh chiến thắng
 	return true;
 }
 
+BasicObject game_tutorial;
+bool Load_Tutorial()
+{
+	bool ret = game_tutorial.LoadImage("game_tutorial.png", gScreen);
+	if (ret == FALSE) return false;
+	return true;
+}
+
   
 std::vector<EnemyTankObject*> MakeEnemyList()					//tạo vector chứa bot
 {
@@ -250,6 +259,10 @@ int main(int agrc, char* agrv[])
 	{
 		return -1;
 	}
+	if (Load_Tutorial() == FALSE)
+	{
+		return -1;
+	}
 
 	bool quit = false;
 	while (!quit)
@@ -282,6 +295,10 @@ int main(int agrc, char* agrv[])
 		SDL_RenderPresent(gScreen);
 	}
 // cái trên là load menu và chờ cho chuột nhấn vào PLAY GAME mới cho chạy game
+	game_tutorial.Render(gScreen);
+	SDL_RenderPresent(gScreen);
+	SDL_Delay(7000);
+	
 
 	// load map
 	GameMapObject game_map;
@@ -392,7 +409,7 @@ int main(int agrc, char* agrv[])
 
 						if (coll == true)
 						{
-							
+							Mix_PlayMusic(gSoundBoom, 0);
 							for (int ex = 0; ex < 8; ex++)
 							{
 								int x_location = bRect.x - 50;

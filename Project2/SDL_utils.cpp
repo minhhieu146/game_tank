@@ -17,12 +17,12 @@ void InitSDL(SDL_Window *gWindow, SDL_Renderer* &gScreen)
 
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	
-		gSoundBullet = Mix_LoadWAV("sound gun.wav");
+		gSoundBullet = Mix_LoadMUS("sound_gun.mp3");
 		if (gSoundBullet == NULL)
 		{
 			printf( "Failed to load sound bullet effect"); 
 		}
-		gSoundBoom = Mix_LoadWAV("sound boom.wav");
+		gSoundBoom = Mix_LoadMUS("sound_boom.mp3");
 		if (gSoundBoom == NULL)
 		{
 			printf("Failed to load sound  boom effect");

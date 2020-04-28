@@ -2,7 +2,7 @@
 void GameMapObject::LoadMap(const char* name)  // ddùng để đọc dữ liệu từ file
 {
 	FILE* fp = NULL;
-	fopen_s(&fp, name, "rb");
+	fopen_s(&fp, name, "rb");				
 	if (fp == NULL) {
 		return;
 	}

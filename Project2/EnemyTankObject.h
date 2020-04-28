@@ -5,6 +5,7 @@
 #include"SDL_utils.h"
 #include"BasicObject.h"
 #include"BulletObject.h"
+#include"Gallery.h"
 
 
 class EnemyTankObject : public BasicObject

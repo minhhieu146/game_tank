@@ -1,4 +1,5 @@
 ﻿#include"Gallery.h"
+#include"BasicObject.h"
 
 Gallery::Gallery(SDL_Renderer* renderer_)
 	: renderer(renderer_)
@@ -24,11 +25,6 @@ SDL_Texture* Gallery::loadTexture(std::string path)
 	}
 	return newTexture;
 }
-// t bảo gì m n vhiiỉte s viết hàm load r mà ko bt dùng đâu
-// đâu t vừa alt tab ra nhắn tin
-//load 1 chỗ hết r đấy 
-// sao cần cái gì 
-// cần cái a bách bảo ý
 
 void Gallery::loadGamePictures()
 {
@@ -40,4 +36,5 @@ void Gallery::loadGamePictures()
 	pictures[PIC_BULLET_UP] = loadTexture("BulletUp.png");
 	pictures[PIC_BULLET_LEFT] = loadTexture("BulletLeft.png");
 	pictures[PIC_BULLET_RIGHT] = loadTexture("BulletRight.png");
+	pictures[PIC_E_BULLET_LEFT] = loadTexture("EnemyBulletLeft.png");
 }
