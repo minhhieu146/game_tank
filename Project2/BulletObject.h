@@ -1,8 +1,8 @@
-﻿#ifndef BULLET_OBJECT_
+﻿#pragma once
+#ifndef BULLET_OBJECT_
 #define BULLET_OBJECT_
 
 #include"BasicObject.h"
-#include"SDL_utils.h"
 #include"Gallery.h"
 
 class BulletObject : public BasicObject

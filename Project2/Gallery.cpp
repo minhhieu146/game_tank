@@ -1,5 +1,4 @@
 ﻿#include"Gallery.h"
-#include"BasicObject.h"
 
 Gallery::Gallery(SDL_Renderer* renderer_)
 	: renderer(renderer_)

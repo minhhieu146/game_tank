@@ -1,16 +1,14 @@
-﻿#ifndef BASIC_OBJECT_H_
+﻿#pragma once
+#ifndef BASIC_OBJECT_H_
 #define BASIC_OBJECT_H_
 
 #include"SDL_utils.h"
-
 class BasicObject		//lớp cơ bản
 {
 public:
 	BasicObject();
-	~BasicObject();
-	
+	~BasicObject(); 
 	SDL_Texture* fact_screen;
-	
 	void SetRect(const int& x, const int& y) {						//set tọa độ 
 		rect_.x = x;
 		rect_.y = y;

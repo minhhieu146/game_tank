@@ -1,4 +1,7 @@
 ﻿#include"Game Map.h"
+
+// phần này e tham khảo ở phát triển phần mềm 123az
+
 void GameMapObject::LoadMap(const char* name)  // ddùng để đọc dữ liệu từ file
 {
 	FILE* fp = NULL;
@@ -89,3 +92,4 @@ void GameMapObject::DrawMap(SDL_Renderer* screen)  //vẽ map lên màn hình
 		map_y_++;
 	}
 }
+

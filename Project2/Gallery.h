@@ -1,7 +1,7 @@
+#pragma once
 #ifndef GALLERY_H
 #define GALLERY_H
 
-#include"SDL_utils.h"
 #include"BasicObject.h"
 
 	enum PictureID {

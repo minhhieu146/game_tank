@@ -1,5 +1,4 @@
 #include"Time.h"
-#include"SDL_utils.h"
 
 TimeObject::TimeObject()
 {

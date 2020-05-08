@@ -1,9 +1,4 @@
 #include"TankObject.h"
-#include"BulletObject.h"
-#include"Game Map.h"
-#include"Gallery.h"
-#include"SDL_utils.h"
-
 TankObject::TankObject()
 {
 	
@@ -184,8 +179,7 @@ void TankObject::InputKeyboard(SDL_Event events, SDL_Renderer* screen)
 	if (events.type == SDL_MOUSEBUTTONDOWN)
 	{
 		if (events.button.button == SDL_BUTTON_LEFT)
-		{
-			Mix_PlayMusic(gSoundBullet, 0);
+		{ 
 			BulletObject* bullet = new BulletObject();
 			if (status_ == MOVE_RIGHT)
 			{

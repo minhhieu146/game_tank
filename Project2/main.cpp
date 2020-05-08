@@ -1,14 +1,9 @@
-﻿#include"SDL_utils.h"
-#include"BasicObject.h"
-#include"Game Map.h"
-#include"TankObject.h"
+﻿#include"TankObject.h"
 #include"Time.h"
 #include"EnemyTankObject.h"
 #include"BulletObject.h"
 #include"Explosive Effect.h"
 #include"MouseButton.h"
-#include"Gallery.h"
-
 
 
 bool CheckCollision(const SDL_Rect& a, const SDL_Rect& b)			//hàm check va chạm giữa 2 object
@@ -297,7 +292,7 @@ int main(int agrc, char* agrv[])
 // cái trên là load menu và chờ cho chuột nhấn vào PLAY GAME mới cho chạy game
 	game_tutorial.Render(gScreen);
 	SDL_RenderPresent(gScreen);
-	SDL_Delay(7000);
+	SDL_Delay(5000);
 	
 
 	// load map
@@ -332,7 +327,7 @@ int main(int agrc, char* agrv[])
 			tank.InputKeyboard(gEvent, gScreen);
 		}
 		SDL_SetRenderDrawColor(gScreen, 255, 255, 255, 255);
-		SDL_RenderClear(gScreen);	//xóa màn hình
+		SDL_RenderClear(gScreen);
 
 		gBackground.Render(gScreen, NULL);		//load background lên
 		game_map.DrawMap(gScreen);				// vẽ các vật cản lên
@@ -409,7 +404,6 @@ int main(int agrc, char* agrv[])
 
 						if (coll == true)
 						{
-							Mix_PlayMusic(gSoundBoom, 0);
 							for (int ex = 0; ex < 8; ex++)
 							{
 								int x_location = bRect.x - 50;

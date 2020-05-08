@@ -1,8 +1,4 @@
 ﻿#include"EnemyTankObject.h"
-#include"BasicObject.h"
-#include"SDL_utils.h"
-#include"BulletObject.h"
-#include"Gallery.h"
 
 EnemyTankObject::EnemyTankObject()
 {
@@ -25,7 +21,6 @@ EnemyTankObject::EnemyTankObject()
 
 EnemyTankObject::~EnemyTankObject()
 {
-
 
 }
 
@@ -269,7 +264,6 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			int bullet_distance = 0;
 			if (check_dir == 1)
 			{
-				// pBullet->texture = picture[EnemyBulletLeft] 
 				pBullet->LoadImage("EnemyBulletLeft.png", gScreen);
 				pBullet->set_bullet_direction(BulletObject::DIR_LEFT);
 				pBullet->set_x_change(20);
@@ -278,7 +272,6 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			}
 			else if (check_dir == 2)
 			{
-
 				pBullet->LoadImage("EnemyBulletRight.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_RIGHT);
 				pBullet->set_x_change(20);
@@ -287,7 +280,6 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			}
 			else if (check_dir == 3)
 			{
-				
 				pBullet->LoadImage("EnemyBulletUp.png", screen);
 				pBullet->set_bullet_direction(BulletObject::DIR_UP);
 				pBullet->set_y_change(20);
@@ -295,7 +287,6 @@ void EnemyTankObject::MakeBullet(SDL_Renderer* screen, const int& x_limit, const
 			}
 			else if (check_dir == 4)
 			{
-				
 				pBullet->LoadImage("EnemyBulletDown.png", screen); 
 				pBullet->set_bullet_direction(BulletObject::DIR_DOWN);
 				pBullet->set_y_change(20);

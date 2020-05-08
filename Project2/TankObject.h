@@ -1,11 +1,12 @@
+#pragma once
 #ifndef TANK_OBJECT_
 #define TANK_OBJECT_
 
-#include"SDL_utils.h";
 #include"BasicObject.h";
 #include<vector>
 #include"BulletObject.h"
-
+#include"Game Map.h"
+#include"Gallery.h"
 #define TANK_SPEED 5
 
 class TankObject : public BasicObject

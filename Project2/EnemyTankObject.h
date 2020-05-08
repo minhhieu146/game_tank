@@ -1,12 +1,11 @@
-﻿#ifndef ENEMY_TANK_OBJECT_
+﻿#pragma once
+#ifndef ENEMY_TANK_OBJECT_
 #define ENEMY_TANK_OBJECT_
 
 
-#include"SDL_utils.h"
 #include"BasicObject.h"
 #include"BulletObject.h"
 #include"Gallery.h"
-
 
 class EnemyTankObject : public BasicObject
 {

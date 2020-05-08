@@ -12,13 +12,6 @@ MouseButton::~MouseButton()
 
 }
 
-
-void MouseButton::setLocation(int x, int y)
-{
-	mLocation.x = x;
-	mLocation.y = y;
-}
-
 bool MouseButton::HandleEvent(SDL_Event* e)
 {
 		bool inside = false;

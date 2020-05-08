@@ -1,8 +1,8 @@
+#pragma once
 #ifndef EXPLOSIVE_EFFECT
 #define EXPLOSIVE_EFFECT
 
 #include "BasicObject.h"
-#include "SDL_utils.h"
 
 class ExplosiveEffectObject : public BasicObject
 {

@@ -1,8 +1,4 @@
-#include"BasicObject.h"
 #include"BulletObject.h"
-#include"EnemyTankObject.h"
-#include"Gallery.h"
-
 BulletObject::BulletObject()
 {
 	rect_.x = 0;
