@@ -41,8 +41,8 @@ public:
 	std::vector<BulletObject*> get_bullet_list() const { return bullet_list_; };
 	void set_bullet_list(const std::vector<BulletObject*> &bl_list) { bullet_list_ = bl_list; };
 
-	void InitBullet(BulletObject* pBullet, SDL_Renderer* screen);						//thêm đạn vào vector
-	void MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& y_limit);		//bắn đạn
+	void InitBullet(BulletObject* pBullet, SDL_Renderer* screen);						//tạo ra đạn
+	void MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& y_limit);		//load ảnh đạn và cho di chuyển
 
 	void RemoveBullet(const int& idx);													//hàm xóa đạn
 

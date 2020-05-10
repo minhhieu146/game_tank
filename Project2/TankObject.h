@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef TANK_OBJECT_
 #define TANK_OBJECT_
 
@@ -23,9 +23,9 @@ public:
 		MOVE_DOWN = 3,
 	};
 	
-	bool LoadImage(std::string path, SDL_Renderer* screen);
-	void InputKeyboard(SDL_Event events, SDL_Renderer* screen);
-	void Show(SDL_Renderer* des);
+	bool LoadImage(std::string path, SDL_Renderer* screen);			// load ảnh tank
+	void InputKeyboard(SDL_Event events, SDL_Renderer* screen);		// xử lý sự kiện bàn phím
+	void Show(SDL_Renderer* des);									// render lên màn hình
 
 	void MoveTank(Map& map_data);
 	void CheckMap(Map& map_dada);
@@ -43,7 +43,7 @@ public:
 
 private:
 
-	std::vector<BulletObject*> p_bullet_list_;
+	std::vector<BulletObject*> p_bullet_list_;  // tạo vectoe chứa đạn
 	float x_change;
 	float y_change;
 

@@ -1,12 +1,12 @@
-#include"TankObject.h"
+﻿#include"TankObject.h"
 TankObject::TankObject()
 {
 	
-	x_location = 100;
+	x_location = 100;		// vị trí xuất hiện cho tank chính
 	y_location = 300;
-	x_change = 0;
+	x_change = 0;				
 	y_change = 0;
-	width_frame_ = 60;
+	width_frame_ = 60;				// chiều cao và chiều rộng của ảnh
 	height_frame_ = 64;
 	status_ = -1;
 	input_type_.left_ = 0;
@@ -32,7 +32,7 @@ bool TankObject::LoadImage(std::string path, SDL_Renderer* screen)
 
 
 
-SDL_Rect TankObject::GetRectTank()
+SDL_Rect TankObject::GetRectTank()					// trả về tọa độ của tank
 {
 	SDL_Rect rect;
 	rect.x = rect_.x;

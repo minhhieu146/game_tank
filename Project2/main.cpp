@@ -297,7 +297,7 @@ int main(int agrc, char* agrv[])
 
 	// load map
 	GameMapObject game_map;
-	game_map.LoadMap("map//maptank.txt");
+	game_map.LoadMap();
 	game_map.LoadTiles(gScreen);
 	
 	//load tank

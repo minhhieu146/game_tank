@@ -1,4 +1,4 @@
-#include"BulletObject.h"
+﻿#include"BulletObject.h"
 BulletObject::BulletObject()
 {
 	rect_.x = 0;
@@ -13,7 +13,7 @@ BulletObject::~BulletObject()
 
 }
 
-void BulletObject::Move(const int& x_max_, const int& y_max_)
+void BulletObject::Move(const int& x_max_, const int& y_max_)   //di chuyển trong phạm vi map
 {
 	if (bullet_direction == DIR_RIGHT)
 	{
@@ -51,10 +51,10 @@ void BulletObject::Move(const int& x_max_, const int& y_max_)
 
 bool BulletObject::CheckMapForBullet(Map& map_data, const SDL_Rect& object1)
 {
-	int left = 0;		//diem trai cua anh
+	int left = 0;		
 	int right = 0;
 
-	int top = 0;		//diem phai cua anh
+	int top = 0;		
 	int down = 0;
 
 
