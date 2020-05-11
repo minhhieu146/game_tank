@@ -1,9 +1,9 @@
-#include"Time.h"
+﻿#include"Time.h"
 
 TimeObject::TimeObject()
 {
-	start_tick_ = 0;
-	paused_tick_ = 0;
+	start_tick_ = 0;				// thời gian bđ
+	paused_tick_ = 0;				//tgian dừng
 	is_paused_ = false;
 	is_started_ = false;
 

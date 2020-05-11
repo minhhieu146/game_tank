@@ -1,9 +1,9 @@
-#include"MouseButton.h"
+﻿#include"MouseButton.h"
 
 MouseButton::MouseButton()
 {
 	
-	mLocation.x = 480;
+	mLocation.x = 480;			//tọa độ của chữ play game
 	mLocation.y = 400;
 }
 

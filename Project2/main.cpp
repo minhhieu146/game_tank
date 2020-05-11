@@ -189,7 +189,7 @@ bool Load_victory()														//load ảnh chiến thắng
 	return true;
 }
 
-BasicObject game_tutorial;
+BasicObject game_tutorial;												//load ảnh hướng dẫn chơi
 bool Load_Tutorial()
 {
 	bool ret = game_tutorial.LoadImage("game_tutorial.png", gScreen);
@@ -200,8 +200,8 @@ bool Load_Tutorial()
   
 std::vector<EnemyTankObject*> MakeEnemyList()					//tạo vector chứa bot
 {
-	std::vector<EnemyTankObject*> list_enemy;
-	EnemyTankObject* enemy_obj = new EnemyTankObject[5];
+	std::vector<EnemyTankObject*> list_enemy;					//vector chứa bot
+	EnemyTankObject* enemy_obj = new EnemyTankObject[5];			//khởi tạo có 5 con
 	for (int i = 0; i < 5; i++)
 	{
 		EnemyTankObject* pEnemy = (enemy_obj + i);
@@ -211,7 +211,7 @@ std::vector<EnemyTankObject*> MakeEnemyList()					//tạo vector chứa bot
 			pEnemy->set_x_location(1100.0);						// set vị trí cho bot
 			pEnemy->set_y_location(100.0 + 100.0 * i); 
 			BulletObject* pBullet = new BulletObject();			// tạo đạn cho bot
-			pEnemy->InitBullet(pBullet, gScreen);	
+			pEnemy->InitBullet(pBullet, gScreen);				//set cho đạn di chuyển và thêm vào vector chứa đạn
 			list_enemy.push_back(pEnemy);						//thêm vào vector chứa đạn
 		}
 	}
@@ -230,7 +230,7 @@ void close()
 	SDL_Quit();
 }
 
-MouseButton gButton;
+MouseButton gButton;				
 
 int main(int agrc, char* agrv[])
 {
@@ -290,30 +290,29 @@ int main(int agrc, char* agrv[])
 		SDL_RenderPresent(gScreen);
 	}
 // cái trên là load menu và chờ cho chuột nhấn vào PLAY GAME mới cho chạy game
-	game_tutorial.Render(gScreen);
+	game_tutorial.Render(gScreen);			//sau khi nhấn vào play game thì cho render ảnh hướng dẫn
 	SDL_RenderPresent(gScreen);
-	SDL_Delay(5000);
+	SDL_Delay(5000);				//render trong 5s
 	
 
 	// load map
 	GameMapObject game_map;
-	game_map.LoadMap();
-	game_map.LoadTiles(gScreen);
+	game_map.LoadTiles(gScreen);			
 	
 	//load tank
 	TankObject tank;
-	tank.LoadImage("tankrdown.png", gScreen);
+	tank.LoadImage("tankrdown.png", gScreen);			//load ảnh tank khi mới xuất hiện
 
 	std::vector<EnemyTankObject*> list_enemy = MakeEnemyList();
 	
-	ExplosiveEffectObject ex_enemy;
-	bool rec = ex_enemy.LoadImage("Explosion.png", gScreen);
+	ExplosiveEffectObject ex_enemy;			//hiệu ứng nổ
+	bool rec = ex_enemy.LoadImage("Explosion.png", gScreen);		//load ảnh nổ(có 8 ảnh)
 	if (rec != NULL)
 	{
 		ex_enemy.set_clip();
 	}
 	
-	int check_game_over = 0;
+	int check_game_over = 0;   //biến logic kiểm tra game over
 	bool is_quit = false;
 	while(!is_quit)
 	{
@@ -324,7 +323,7 @@ int main(int agrc, char* agrv[])
 			{
 				is_quit = true;
 			}
-			tank.InputKeyboard(gEvent, gScreen);
+			tank.InputKeyboard(gEvent, gScreen);		// xử lý sự kiện
 		}
 		SDL_SetRenderDrawColor(gScreen, 255, 255, 255, 255);
 		SDL_RenderClear(gScreen);
@@ -337,22 +336,22 @@ int main(int agrc, char* agrv[])
 		
 		tank.MoveTank(map_data);		//hàm di chuyển
 		tank.Show(gScreen);				// vẽ tank lên
-		tank.BulletMove(gScreen);		//
+		tank.BulletMove(gScreen);		//cho đạn di chuyển
 
-		for (int i = 0; i < list_enemy.size(); i++)		//tạo bot tank
+		for (int i = 0; i < list_enemy.size(); i++)		
 		{
 			EnemyTankObject* pEnemy = list_enemy.at(i);
 			if (pEnemy != NULL)
 			{
-				pEnemy->SetMapXY(map_data.start_x_, map_data.start_y_);			//
+				pEnemy->SetMapXY(map_data.start_x_, map_data.start_y_);			//set cho bot di chuyển trong phạm vi màn hình
 				pEnemy->MakeBullet(gScreen, SCREEN_WIDTH, SCREEN_HEIGHT);		//cho bot bắn đạn
 				pEnemy->MoveTank(map_data);										//bot di chuyển
 				pEnemy->Show(gScreen);											// vẽ bot lên màn hình
 
 				SDL_Rect rect_main_tank = tank.GetRectTank();		// lấy tọa độ của tank chính
-				bool colli = false;
-				std::vector<BulletObject*> eBullet_list = pEnemy->get_bullet_list();		//tạo ra vetor chứa đạn của bot
-				for (int j = 0; j < eBullet_list.size(); j++)
+				bool colli = false;		//check  va chạm giữa đạn của bot và tank chính
+				std::vector<BulletObject*> eBullet_list = pEnemy->get_bullet_list();		//lấy ra vetor chứa đạn của bot
+				for (int j = 0; j < eBullet_list.size(); j++)								//vector này đã được khai báo
 				{
 					BulletObject* eBullet = eBullet_list.at(j);
 					if (eBullet != NULL)
@@ -360,7 +359,7 @@ int main(int agrc, char* agrv[])
 						colli = CheckCollision(eBullet->GetRect(), rect_main_tank);		//check va chạm của đạn bot với tank chính
 						if (colli == true)
 						{
-							pEnemy->RemoveBullet(j);			//xóa đạn
+							pEnemy->RemoveBullet(j);			//xóa đạn nếu như va chạm
 							break;
 						}
 		
@@ -368,7 +367,7 @@ int main(int agrc, char* agrv[])
 				}
 
 				SDL_Rect rect_enemy = pEnemy->GetRectEnemyTank();		//lấy tọa độ bot
-				bool COLL = false;
+				bool COLL = false;				//biên check va chạm giữa 2 tank
 				COLL = CheckCollision(rect_main_tank, rect_enemy);		//check va chạm giữa bot và tank
 				if ( COLL == true ||colli == true)
 				{
@@ -378,7 +377,7 @@ int main(int agrc, char* agrv[])
 			}
 		}
 
-		std::vector<BulletObject*> bullet_arr = tank.get_bullet_list_();		//vector đạn của tank
+		std::vector<BulletObject*> bullet_arr = tank.get_bullet_list_();		//lấy ra vector đạn của tank chính đã đc khai báo
 		for (int i = 0; i < bullet_arr.size(); i++)
 		{
 			BulletObject* p_bullet = bullet_arr.at(i);
@@ -389,22 +388,18 @@ int main(int agrc, char* agrv[])
 					EnemyTankObject* EnemyTank = list_enemy.at(j);
 					if (EnemyTank != NULL)
 					{
-						SDL_Rect eRect;
-						eRect.x = EnemyTank->GetRect().x;
-						eRect.y = EnemyTank->GetRect().y;
-						eRect.w = EnemyTank->get_width_frame();
-						eRect.h = EnemyTank->get_height_frame();
+						SDL_Rect eRect = EnemyTank->GetRectEnemyTank();			
 
 						SDL_Rect bRect;
 						bRect.x = p_bullet->GetRect().x;
 						bRect.y = p_bullet->GetRect().y;
 
-						bool coll = CheckCollision(bRect, eRect);
-						bool coll_1 = p_bullet->CheckMapForBullet(map_data, bRect);	
+						bool coll = CheckCollision(bRect, eRect);						//check va chạm giữa đạn của main với bot
+						bool coll_1 = p_bullet->CheckMapForBullet(map_data, bRect);		// check va chạm giữa đạn main với vật cản
 
 						if (coll == true)
 						{
-							for (int ex = 0; ex < 8; ex++)
+							for (int ex = 0; ex < 8; ex++)						//load hiệu ứng nổ
 							{
 								int x_location = bRect.x - 50;
 								int y_location = bRect.y - 50;
@@ -414,14 +409,14 @@ int main(int agrc, char* agrv[])
 								
 							}
 							
-							tank.RemoveBullet(i); 
-							EnemyTank->Free();
-							list_enemy.erase(list_enemy.begin() + j);
+							tank.RemoveBullet(i);			//xóa đạn đã bắn trúng
+							EnemyTank->Free();				//free tank bị bắn
+							list_enemy.erase(list_enemy.begin() + j);		// xóa tank bị bắn ra khỏi vector
 						}
 
 						if (coll_1 == true)
 						{
-							tank.RemoveBullet(i);
+							tank.RemoveBullet(i);		// nếu mà bắn trúng vật cản thì chỉ xóa đạn đi
 						}
 					}
 				}
@@ -449,7 +444,7 @@ int main(int agrc, char* agrv[])
 		}
 	}
 
-	for (int i = 0; i < list_enemy.size(); i++)
+	for (int i = 0; i < list_enemy.size(); i++)				//giải phóng vector
 	{
 		EnemyTankObject* pEnemy = list_enemy.at(i);
 		if (pEnemy != NULL)

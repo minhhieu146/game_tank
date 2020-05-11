@@ -6,7 +6,7 @@
 #include<vector>
 #include"BulletObject.h"
 #include"Game Map.h"
-#include"Gallery.h"
+
 #define TANK_SPEED 5
 
 class TankObject : public BasicObject
@@ -27,8 +27,8 @@ public:
 	void InputKeyboard(SDL_Event events, SDL_Renderer* screen);		// xử lý sự kiện bàn phím
 	void Show(SDL_Renderer* des);									// render lên màn hình
 
-	void MoveTank(Map& map_data);
-	void CheckMap(Map& map_dada);
+	void MoveTank(Map& map_data);									//hàm di chuyển
+	void CheckMap(Map& map_dada);									// hàm check va chạm
 
 
 	void set_bullet_list_(std::vector<BulletObject*> bullet_list)

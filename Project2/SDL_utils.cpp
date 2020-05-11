@@ -1,6 +1,7 @@
 ﻿#include"SDL_utils.h"
 
 #include<iostream>
+
 void InitSDL(SDL_Window *gWindow, SDL_Renderer* &gScreen)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)

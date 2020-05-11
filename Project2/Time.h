@@ -1,6 +1,7 @@
 #pragma once
 #ifndef TIME_H_
 #define TIME_H_
+
 #include"SDL_utils.h"
 
 class TimeObject
@@ -9,7 +10,7 @@ public:
 	TimeObject();
 	~TimeObject();
 
-	void start();
+	void start();					
 	void stop();
 	void paused();
 	void unpaused();

@@ -1,29 +1,9 @@
 ﻿#include"Game Map.h"
 
 
-void GameMapObject::LoadMap()
+void GameMapObject::LoadTiles(SDL_Renderer* screen)  //  hàm này là e coppy từ phát triển phần mềm 123az
 {
-	/*game_map.tile = { 
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 1, 0 },
-		{ 0, 2, 2, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 0 },
-		{ 0, 2, 2, 2, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 0 },
-		{ 0, 2, 2, 2, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 2, 2, 2, 0 },
-		{ 0, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 2, 2, 0 },
-		{ 0, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 2, 1, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } 
-	};*/
-			 
-	game_map.start_x_ = 0;
-	game_map.start_y_ = 0;
-}
-
-
-void GameMapObject::LoadTiles(SDL_Renderer* screen)  // 
-{
-	char tile_type[10]; // số lượng vật thể có thể có trong map
+	char tile_type[10]; 
 	FILE* fp = NULL;
 
 	for (int i = 0; i < MAP_TILES; i++)
@@ -50,6 +30,9 @@ void GameMapObject::DrawMap(SDL_Renderer* screen)  //vẽ map lên màn hình
 
 	int map_x_ = 0;  // đang là ở ô thứ bao nhiêu
 	int map_y_ = 0;	 
+
+	game_map.start_x_ = 0;
+	game_map.start_y_ = 0;
 
 	map_x_ = game_map.start_x_ / TILE_SIZE;
 	map_y_ = game_map.start_y_ / TILE_SIZE;

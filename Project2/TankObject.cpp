@@ -8,7 +8,7 @@ TankObject::TankObject()
 	y_change = 0;
 	width_frame_ = 60;				// chiều cao và chiều rộng của ảnh
 	height_frame_ = 64;
-	status_ = -1;
+	status_ = -1;					// biến check hướng
 	input_type_.left_ = 0;
 	input_type_.right_ = 0;
 	input_type_.up_ = 0;
@@ -43,7 +43,7 @@ SDL_Rect TankObject::GetRectTank()					// trả về tọa độ của tank
 }
 
 
-void TankObject::Show(SDL_Renderer* des)
+void TankObject::Show(SDL_Renderer* des)				//load ảnh và render lên màn hình
 {
 	if (status_ == MOVE_LEFT)
 	{
@@ -89,7 +89,7 @@ void TankObject::Show(SDL_Renderer* des)
 	SDL_RenderCopy(des, fact_screen, rect_main_tank, &render_region );
 }
 
-void TankObject::InputKeyboard(SDL_Event events, SDL_Renderer* screen)
+void TankObject::InputKeyboard(SDL_Event events, SDL_Renderer* screen)		//xử lý sự kiện chuột và bàn phím
 {
 	if (events.type == SDL_KEYDOWN)
 	{
@@ -223,7 +223,7 @@ void TankObject::InputKeyboard(SDL_Event events, SDL_Renderer* screen)
 GameMapObject game_map;
 Map map_data = game_map.getMap();
 
-void TankObject::BulletMove(SDL_Renderer* des)
+void TankObject::BulletMove(SDL_Renderer* des)				//làm cho đnạ di chuyển
 {
 	for (int i = 0; i < p_bullet_list_.size(); i++)
 	{
@@ -232,12 +232,12 @@ void TankObject::BulletMove(SDL_Renderer* des)
 		{
 			if (bullet->get_is_move() == true)
 			{
-				bullet->Move(SCREEN_WIDTH, SCREEN_HEIGHT);
+				bullet->Move(SCREEN_WIDTH, SCREEN_HEIGHT);		//di chuyển trong phạm vi màn hình
 				bullet->Render(des);
 			}
 			else
 			{
-				p_bullet_list_.erase(p_bullet_list_.begin() + i);
+				p_bullet_list_.erase(p_bullet_list_.begin() + i);		//nếu ra khỏi màn hình thì xóa nó đi
 				if (bullet != NULL)
 				{
 					delete bullet;
@@ -248,7 +248,7 @@ void TankObject::BulletMove(SDL_Renderer* des)
 	}
 }
 
-void TankObject::RemoveBullet(const int& idx)
+void TankObject::RemoveBullet(const int& idx)						//hàm xóa đnạ khi nó va chạm
 {
 	int size = p_bullet_list_.size();
 	if (size > 0 && idx < size)
@@ -265,7 +265,7 @@ void TankObject::RemoveBullet(const int& idx)
 }
 
 
-void TankObject::MoveTank(Map& map_data)
+void TankObject::MoveTank(Map& map_data)	
 {
 	x_change = 0;		//buoc di cua tank
 	y_change =0;
@@ -292,7 +292,7 @@ void TankObject::MoveTank(Map& map_data)
 	CheckMap(map_data);
 }
 
-void TankObject::CheckMap(Map& map_data)
+void TankObject::CheckMap(Map& map_data)			// check va chạm với các vật cản
 {
 	int x1 = 0;		//toa do ben trai
 	int x2 = 0;
@@ -301,15 +301,15 @@ void TankObject::CheckMap(Map& map_data)
 	int y2 = 0;
 
 	//check theo chieu ngang
-	int height_min = height_frame_ - 15;
+	int height_min = height_frame_ - 5;
 	
-	x1 = (x_location + x_change) / TILE_SIZE;
+	x1 = (x_location + x_change + 2) / TILE_SIZE;
 	x2 = (x_location + x_change + width_frame_ - 1) / TILE_SIZE;
 
 	y1 = y_location / TILE_SIZE;
 	y2 = (y_location + height_min - 1) / TILE_SIZE;
 
-	if (x1 >= 0 && x2 < (MAX_MAP_X) && y1 >= 0 && y2 < MAX_MAP_Y)
+	if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
 	{
 		if (x_change > 0)
 		{
@@ -330,12 +330,12 @@ void TankObject::CheckMap(Map& map_data)
 			}
 		}
 	}
-	//check theo chieu doc
+	//check theo chieu doc tương tự như chiều ngang
 
-	int width_min = width_frame_ - 10;
+	int width_min = width_frame_ - 5;
 	x1 = (x_location) / TILE_SIZE;
 	x2 = (x_location + width_min) / TILE_SIZE;
-	y1 = (y_location + y_change) / TILE_SIZE;
+	y1 = (y_location + y_change + 2 ) / TILE_SIZE;
 	y2 = (y_location + y_change + height_frame_ - 1) / TILE_SIZE;
 
 	if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
