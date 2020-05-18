@@ -5,3 +5,5 @@ chuột trái để bắn đạn
 nếu đạn trúng địch sẽ phá hủy nó
 tiêu diệt hết địch sẽ chiến thắng
 ngược lại nếu bị va phải địch hay bị địch bắn thì sẽ thua
+
+em có tham khảo code ở lazyfoo, phattrienphanmem123az và slide của cô
